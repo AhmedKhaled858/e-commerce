@@ -21,6 +21,7 @@ Route::middleware('admin')->group(function(){
     // Route::get('/test',[AdminController::class,'test']);
     Route::get('/createCategory',[AdminController::class,'createCategory'])->name('admin.createCategory');
     Route::post('/storeCategory',[AdminController::class,'storeCategory'])->name('admin.storeCategory');
+    Route::get('/listCategories',[AdminController::class,'listCategories'])->name('admin.listCategories');
 });
 
 require __DIR__.'/auth.php';

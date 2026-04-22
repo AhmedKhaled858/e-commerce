@@ -17,4 +17,8 @@ class AdminController extends Controller
         $category->save();
         return redirect()->route('admin.createCategory')->with('success','Category created successfully');
     }
+    public function listCategories(){
+        $categories = \App\Models\Category::all();
+        return view('admin.listcategories', compact('categories'));
+    }
 }

@@ -136,19 +136,20 @@
            <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
         <ul class="list-unstyled">
                      <li class="active"><a href="{{ route('dashboard') }}"> <i class="icon-home"></i>Home </a></li>
-                <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Example dropdown </a>
-                  <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                    <li><a href="#">Page</a></li>
-                    <li><a href="#">Page</a></li>
-                    <li><a href="#">Page</a></li>
-                  </ul>
-                </li>
-                <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Category </a>
+                      <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Category </a>
                   <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
                     <li><a href="{{ route('admin.createCategory') }}">Create Category</a></li>
                     <li><a href="{{ route('admin.listCategories') }}">List Categories</a></li>
                   </ul>
                 </li>
+                <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Product </a>
+                  <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                    <li><a href="{{ route('admin.addProduct') }}">Add Product</a></li>
+                    <li><a href="#">List Products</a></li>
+                    <li><a href="#">View Order</a></li>
+                  </ul>
+                </li>
+               
             
         </ul><span class="heading">Extras</span>
         <ul class="list-unstyled">
@@ -169,6 +170,7 @@
                 @yield('analysis')
                 @yield('listcategory')
                 @yield('createcategory')
+                @yield('addproduct')
             </section>
 
             <section>

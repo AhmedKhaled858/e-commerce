@@ -24,6 +24,9 @@ Route::middleware('admin')->group(function(){
     Route::get('/listCategories',[AdminController::class,'listCategories'])->name('admin.listCategories');
     Route::delete('/deleteCategory/{id}',[AdminController::class,'deleteCategory'])->name('admin.deleteCategory');
     Route::post('/editCategory/{id}',[AdminController::class,'editCategory'])->name('admin.editCategory');
+    Route::get('/addProduct',[AdminController::class,'addProduct'])->name('admin.addProduct');
+    Route::post('/storeProduct',[AdminController::class,'storeProduct'])->name('admin.storeProduct');
+
 });
 
 require __DIR__.'/auth.php';

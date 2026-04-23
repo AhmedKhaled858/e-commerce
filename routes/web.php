@@ -26,7 +26,9 @@ Route::middleware('admin')->group(function(){
     Route::post('/editCategory/{id}',[AdminController::class,'editCategory'])->name('admin.editCategory');
     Route::get('/addProduct',[AdminController::class,'addProduct'])->name('admin.addProduct');
     Route::post('/storeProduct',[AdminController::class,'storeProduct'])->name('admin.storeProduct');
-
+    Route::get('/ViewProducts',[AdminController::class,'ViewProducts'])->name('admin.ViewProducts');
+    Route::delete('/deleteProduct/{id}',[AdminController::class,'deleteProduct'])->name('admin.deleteProduct');
+    Route::post('/editProduct/{id}',[AdminController::class,'editProduct'])->name('admin.editProduct');
 });
 
 require __DIR__.'/auth.php';

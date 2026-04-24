@@ -20,10 +20,11 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-       
-         .productTable::-webkit-scrollbar {
+
+        .productTable::-webkit-scrollbar {
             width: 8px;
         }
+
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -69,16 +70,18 @@
                         <tr>
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->title }}</td>
-                            <td style="max-width:220px; white-space:normal; word-break:break-word;">{{Str::limit($product->description, 80, '...') }}</td>
+                            <td style="max-width:220px; white-space:normal; word-break:break-word;">
+                                {{ Str::limit($product->description, 80, '...') }}</td>
                             <td>{{ $product->quantity }}</td>
                             <td>{{ $product->price }}</td>
-                            <td> <img src="{{ asset('storage/' . $product->product_image) }}" width="80" height="80" load="lazy"
-                                    alt="{{ $product->title }}" style="object-fit:cover;"></td>
+                            <td> <img src="{{ asset('storage/' . $product->product_image) }}" width="80" height="80"
+                                    load="lazy" alt="{{ $product->title }}" style="object-fit:cover;"></td>
                             <td>{{ $product->category->name }}</td>
                             <td>
                                 <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale" data-toggle="modal"
                                     href="#edit{{ $product->id }}"><i class="las la-pen"></i>Edit</a>
-                                <form action="{{route('admin.deleteProduct', $product->id)}}" method="POST" style="display: inline;">
+                                <form action="{{ route('admin.deleteProduct', $product->id) }}" method="POST"
+                                    style="display: inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger"

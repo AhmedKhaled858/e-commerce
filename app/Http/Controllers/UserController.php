@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
+use App\Models\Product;
 
 class UserController extends Controller
 {
@@ -41,9 +43,11 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        $categories = Category::all();
+        $products = Product::all();
+        return view('index', compact('categories', 'products'));
     }
 
     /**

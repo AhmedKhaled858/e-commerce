@@ -7,6 +7,8 @@ use App\Http\Requests\StoreProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
+
 class AdminController extends Controller
 {
     //
@@ -56,21 +58,23 @@ class AdminController extends Controller
     // store product function with image upload
     public function storeProduct(StoreProductRequest $request)
         {
-            $product = new Product();
-            $product->title = $request->input('product_title');
-            $product->description = $request->input('product_description');
-            $product->quantity = $request->input('product_quantity');
-            $product->price = $request->input('product_price');
-            $image = $request->file('product_image');
-            if ($image) {
-                $imageName = time() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('images/products'), $imageName);
-                $product->product_image = 'images/products/' . $imageName;
-            }
+           $data = [
+        'title' => $request->product_title,
+        'description' => $request->product_description,
+        'quantity' => $request->product_quantity,
+        'price' => $request->product_price,
+        'category_id' => $request->product_category,
+    ];
 
-            $product->category_id = $request->input('product_category');
-            $product->save();
-            return redirect()->route('admin.addProduct')->with('success', 'Product created successfully');
+    if ($request->hasFile('product_image')) {
+        $data['product_image'] = $request->file('product_image')
+            ->store('products', 'public');
+    }
+
+    Product::create($data);
+
+    return redirect()->route('admin.addProduct')
+        ->with('success', 'Product created successfully');
         }
     // view products function with pagination
     public function ViewProducts()
@@ -97,23 +101,30 @@ class AdminController extends Controller
     // edit product function
     public function editProduct(StoreProductRequest $request, $id)
       {
-        $product = Product::find($id);
-        $image = $request->file('product_image');
-        if ($image) {
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/products'), $imageName);
-        }
-        $product->update([
-            'title' => $request->input('product_title'),
-            'description' => $request->input('product_description'),
-            'quantity' => $request->input('product_quantity'),
-            'price' => $request->input('product_price'),
-            'product_image' => $image ? 'images/products/' . $imageName : $product->product_image,
+       $product = Product::findOrFail($id);
 
-            'category_id' => $request->input('product_category'),
-        ]);
-        $product->save();
-        return redirect()->route('admin.ViewProducts')->with('success', 'Product updated successfully');
+    $data = [
+        'title' => $request->product_title,
+        'description' => $request->product_description,
+        'quantity' => $request->product_quantity,
+        'price' => $request->product_price,
+        'category_id' => $request->product_category,
+    ];
+
+    if ($request->hasFile('product_image')) {
+
+        if ($product->product_image) {
+            Storage::disk('public')->delete($product->product_image);
+        }
+
+        $data['product_image'] = $request->file('product_image')
+            ->store('products', 'public');
+    }
+
+    $product->update($data);
+
+    return redirect()->route('admin.ViewProducts')
+        ->with('success', 'Product updated successfully');
       }
     //? end functions for product
 }

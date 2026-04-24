@@ -72,7 +72,7 @@
                             <td style="max-width:220px; white-space:normal; word-break:break-word;">{{Str::limit($product->description, 80, '...') }}</td>
                             <td>{{ $product->quantity }}</td>
                             <td>{{ $product->price }}</td>
-                            <td> <img src="{{ asset($product->product_image) }}" width="80" height="80" load="lazy"
+                            <td> <img src="{{ asset('storage/' . $product->product_image) }}" width="80" height="80" load="lazy"
                                     alt="{{ $product->title }}" style="object-fit:cover;"></td>
                             <td>{{ $product->category->name }}</td>
                             <td>

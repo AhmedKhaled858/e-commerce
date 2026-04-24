@@ -20,7 +20,7 @@
                     <input type="text" name="product_title" value="{{ $product->title }}" class="form-control">
                     <br>
                     <label for="product_description">Product Description</label>
-                      <input type="text" name="product_description" value="{{ $product->description }}" class="form-control">
+                    <textarea name="product_description" id="product_description" cols="30" rows="10" class="form-control">{{ $product->description }}</textarea>
                         <br>
                         <label for="product_quantity">Product Quantity</label>
                         <input type="text" name="product_quantity" value="{{ $product->quantity }}" class="form-control" min ="0">

@@ -20,7 +20,10 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-
+       
+         .productTable::-webkit-scrollbar {
+            width: 8px;
+        }
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -40,7 +43,7 @@
         </div>
     @endif
 
-    <div class="container">
+    <div class="container-fluid px-5">
         <h2>Products List</h2>
         <table class="table table-bordered">
             <thead>
@@ -55,7 +58,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="productTable">
 
                 @if ($products->isEmpty())
                     <tr>
@@ -66,7 +69,7 @@
                         <tr>
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->title }}</td>
-                            <td>{{ $product->description }}</td>
+                            <td style="max-width:220px; white-space:normal; word-break:break-word;">{{Str::limit($product->description, 80, '...') }}</td>
                             <td>{{ $product->quantity }}</td>
                             <td>{{ $product->price }}</td>
                             <td> <img src="{{ asset($product->product_image) }}" width="80" height="80" load="lazy"

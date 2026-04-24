@@ -84,6 +84,10 @@ class AdminController extends Controller
     public function deleteProduct($id)
         {
         $product = Product::find($id);
+        $imagePath = public_path($product->product_image);
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
         if ($product) {
             $product->delete();
             return redirect()->route('admin.ViewProducts')->with('success', 'Product deleted successfully');

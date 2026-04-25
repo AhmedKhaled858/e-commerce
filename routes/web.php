@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReviewController;
 
 Route::get('/', [UserController::class, 'show'])->name('index');
 Route::get('/product_details/{id}', [UserController::class, 'productDetails'])->name('product_details');
@@ -32,4 +33,6 @@ Route::middleware('admin')->group(function(){
     Route::post('/editProduct/{id}',[AdminController::class,'editProduct'])->name('admin.editProduct');
 });
 
+//! route for storing reviews
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 require __DIR__.'/auth.php';

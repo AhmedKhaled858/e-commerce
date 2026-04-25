@@ -178,16 +178,16 @@
         <div class="col-md-6 col-lg-5 px-0">
           <form action="#">
             <div>
-              <input type="text" placeholder="Name" />
+              <input type="text" id="name" autocomplete="off" placeholder="Name" />
             </div>
             <div>
-              <input type="email" placeholder="Email" />
+              <input type="email" id="email" autocomplete="off" placeholder="Email" />
             </div>
             <div>
-              <input type="text" placeholder="Phone" />
+              <input type="text" id="phone" autocomplete="off" placeholder="Phone" />
             </div>
             <div>
-              <input type="text" class="message-box" placeholder="Message" />
+              <input type="text" class="message-box" id="message" autocomplete="off" placeholder="Message" />
             </div>
             <div class="d-flex ">
               <button>
@@ -242,7 +242,7 @@
                 Newsletter
               </h5>
               <form action="#">
-                <input type="email" placeholder="Enter your email">
+                <input type="email" id="email" autocomplete="off" placeholder="Enter your email">
                 <button>
                   Subscribe
                 </button>
@@ -295,11 +295,11 @@
   <!-- end info section -->
 
 
-  <script src="js/jquery-3.4.1.min.js"></script>
-  <script src="js/bootstrap.js"></script>
+  <script src="{{ asset('front_end/js/jquery-3.4.1.min.js') }}"></script>
+  <script src="{{ asset('front_end/js/bootstrap.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
   </script>
-  <script src="js/custom.js"></script>
+  <script src="{{ asset('front_end/js/custom.js') }}"></script>
 
 </body>
 

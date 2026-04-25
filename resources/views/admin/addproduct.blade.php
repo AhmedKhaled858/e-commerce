@@ -1,22 +1,19 @@
 @extends('admin.maindesign')
 
 @section('addproduct')
-
     @if (session('success'))
-        <div class="alert alert-success" id="alertBox">
+        <div class="alert success">
+            <i class="fa fa-check-circle"></i>
             {{ session('success') }}
+        </div>
+    @elseif(session('error'))
+        <div class="alert error">
+            <i class="fa fa-times-circle"></i>
+            {{ session('error') }}
         </div>
     @endif
 
-    {{-- @if ($errors->any())
-        <div class="alert alert-danger" id='alertBox'>
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif --}}
+
 
     <div class="container">
         <div class="row">
@@ -42,16 +39,16 @@
                                 <br>
 
                                 <label for="product_description">Product Description</label>
-                                <textarea class="form-control" name="product_description" id="product_description" required cols="30" rows="10"
-                                    placeholder="Enter Product Description">{{ old('product_description') }}</textarea>
+                                <textarea class="form-control" name="product_description" id="product_description" required cols="30"
+                                    rows="10" placeholder="Enter Product Description">{{ old('product_description') }}</textarea>
                                 @error('product_description')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                                 <br>
 
                                 <label for="product_quantity">Product Quantity</label>
-                                <input type="number" name="product_quantity" id="product_quantity"  min="0" required
-                                    value="{{ old('product_quantity') }}" placeholder="Enter Product Quantity" 
+                                <input type="number" name="product_quantity" id="product_quantity" min="0" required
+                                    value="{{ old('product_quantity') }}" placeholder="Enter Product Quantity"
                                     class="form-control">
                                 @error('product_quantity')
                                     <small class="text-danger">{{ $message }}</small>
@@ -59,8 +56,8 @@
                                 <br>
 
                                 <label for="product_price">Product Price</label>
-                                <input type="number" name="product_price" id="product_price" required  min="0" step="0.01"
-                                    value="{{ old('product_price') }}" placeholder="Enter Product Price"
+                                <input type="number" name="product_price" id="product_price" required min="0"
+                                    step="0.01" value="{{ old('product_price') }}" placeholder="Enter Product Price"
                                     class="form-control">
                                 @error('product_price')
                                     <small class="text-danger">{{ $message }}</small>
@@ -106,11 +103,18 @@
 
     <script>
         setTimeout(function() {
-            let alertBox = document.getElementById('alertBox');
-            if (alertBox) {
-                alertBox.style.display = 'none';
-            }
-        }, 3000);
-    </script>
+            const alert = document.querySelector('.alert');
 
+            if (alert) {
+                alert.style.transition = "0.5s";
+                alert.style.opacity = "0";
+                alert.style.transform = "translateY(-10px)";
+
+                setTimeout(() => {
+                    alert.style.display = "none";
+                }, 500);
+            }
+
+        }, 15000);
+    </script>
 @endsection

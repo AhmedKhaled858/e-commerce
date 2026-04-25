@@ -1,11 +1,16 @@
 @extends('admin.maindesign')
 @section('listcategory')
-@if (session('success'))
-    <div class="alert alert-success" id="successAlert">
-        {{ session('success') }}
-    </div>
-    
-@endif
+ @if (session('success'))
+            <div class="alert success">
+                <i class="fa fa-check-circle"></i>
+                {{ session('success') }}
+            </div>
+        @elseif(session('error'))
+            <div class="alert error">
+                <i class="fa fa-times-circle"></i>
+                {{ session('error') }}
+            </div>
+        @endif
 <div class="container">
     <h2>Categories List</h2>
     <table class="table table-bordered">

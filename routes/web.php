@@ -9,9 +9,13 @@ use App\Http\Controllers\ReviewController;
 
 Route::get('/', [UserController::class, 'show'])->name('index');
 Route::get('/product_details/{id}', [UserController::class, 'productDetails'])->name('product_details');
-Route::get('/products', [HomeController::class, 'allProducts'])->name('all.products');
-
+Route::get('/products', [UserController::class, 'allProducts'])->name('all.products');
+Route::get('/product/cart',[UserController::class,'productCart'])->middleware(['auth', 'verified'])->name('product.cart');
+Route::get('/product/cart/remove/{id}',[UserController::class,'removeFromCart'])->name('cart.remove');
 Route::get('/dashboard',[UserController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::post('/cart/add', [UserController::class, 'addToCart'])->name('cart.add');
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

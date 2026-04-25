@@ -1,46 +1,18 @@
 @extends('admin.maindesign')
 @section('listcategory')
-    <style>
-        #loadingScreen {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: #22252a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
 
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #ccc;
-            border-top: 5px solid #333;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        .productTable::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
     <div id="loadingScreen">
         <div class="spinner"></div>
     </div>
     @if (session('success'))
-        <div class="alert alert-success" id="successAlert">
+        <div class="alert success">
+            <i class="fa fa-check-circle"></i>
             {{ session('success') }}
+        </div>
+    @elseif(session('error'))
+        <div class="alert error">
+            <i class="fa fa-times-circle"></i>
+            {{ session('error') }}
         </div>
     @endif
 
@@ -98,13 +70,20 @@
 
         </table>
         <script>
-            setTimeout(function() {
-                let alertBox = document.getElementById('successAlert');
-                if (alertBox) {
-                    alertBox.style.display = 'none';
-                }
-            }, 3000);
-        </script>
+       setTimeout(function () {
+        const alert = document.querySelector('.alert');
+
+        if (alert) {
+            alert.style.transition = "0.5s";
+            alert.style.opacity = "0";
+            alert.style.transform = "translateY(-10px)";
+
+            setTimeout(() => {
+                alert.style.display = "none";
+            }, 500);
+        }
+
+    }, 60000);
         <script>
             window.addEventListener("load", function() {
                 document.getElementById("loadingScreen").style.display = "none";

@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/', [UserController::class, 'show'])->name('index');
 Route::get('/product_details/{id}', [UserController::class, 'productDetails'])->name('product_details');
+Route::get('/products', [HomeController::class, 'allProducts'])->name('all.products');
 
 Route::get('/dashboard',[UserController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/search', [HomeController::class, 'search'])->name('search');

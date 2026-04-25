@@ -49,8 +49,9 @@ class UserController extends Controller
      */
     public function show()
     {
+        // return view('index') with the categories and latest products added to the database;
         $categories = Category::all();
-        $products = Product::all();
+        $products = Product::latest()->take(4)->get();
         return view('index', compact('categories', 'products'));
     }
 

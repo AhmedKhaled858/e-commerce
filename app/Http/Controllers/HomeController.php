@@ -22,4 +22,8 @@ class HomeController extends Controller
 
     return view('admin.search_results', compact('products', 'categories', 'keyword'));
     }
+    public function allProducts(){
+        $products = Product::all();
+        return view('all-product', compact('products'));
+    }
 }

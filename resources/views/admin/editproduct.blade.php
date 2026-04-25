@@ -17,19 +17,19 @@
                 <div class="modal-body">
                     <label for="product_title">Product Title</label>
                     <input type="hidden" name="id" value="{{ $product->id }}">
-                    <input type="text" name="product_title" value="{{ $product->title }}" class="form-control">
+                    <input type="text" name="product_title" id="product_title" value="{{ $product->title }}" class="form-control">
                     <br>
                     <label for="product_description">Product Description</label>
                     <textarea name="product_description" id="product_description" cols="30" rows="10" class="form-control">{{ $product->description }}</textarea>
                         <br>
                         <label for="product_quantity">Product Quantity</label>
-                        <input type="text" name="product_quantity" value="{{ $product->quantity }}" class="form-control" min ="0">
+                        <input type="text" name="product_quantity" id="product_quantity" value="{{ $product->quantity }}" class="form-control" min ="0">
                         <br>
                         <label for="product_price">Product Price</label>
-                          <input type="text" name="product_price" value="{{ $product->price }}" class="form-control" min ="0" step="0.01">
+                          <input type="text" name="product_price" id="product_price" value="{{ $product->price }}" class="form-control" min ="0" step="0.01">
                             <br>
                             <label for="product_image">Product Image</label>
-                           <input type="file" name="product_image" value="{{$product->product_image}}" class="form-control">
+                           <input type="file" name="product_image" id="product_image" value="{{$product->product_image}}" class="form-control">
                             <br>
                             <label for="product_category">Category</label>
                           <select name="product_category" id="product_category" class="form-control">

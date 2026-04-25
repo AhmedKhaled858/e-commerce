@@ -59,7 +59,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody id="productTable">
+            <tbody>
 
                 @if ($products->isEmpty())
                     <tr>

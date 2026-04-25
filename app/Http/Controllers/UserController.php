@@ -23,6 +23,10 @@ class UserController extends Controller
             return view('dashboard');
         }
     }
+    public function productDetails($id){
+        $product = Product::findOrFail($id);
+        return view('productdetails', compact('product'));
+    }
 
     /**
      * Show the form for creating a new resource.

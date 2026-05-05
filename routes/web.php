@@ -16,7 +16,9 @@ Route::get('/dashboard',[UserController::class,'index'])->middleware(['auth', 'v
 
 
 Route::post('/cart/add', [UserController::class, 'addToCart'])->name('cart.add');
+
 Route::get('/search', [HomeController::class, 'search'])->name('search');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

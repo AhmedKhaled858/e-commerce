@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductCart;
+use App\Enums\UserType;
 
 class UserController extends Controller
 {
@@ -17,12 +18,13 @@ class UserController extends Controller
     // user dashboard function
     public function index()
     {
-        if(Auth::check()&&Auth::user()->user_type=='admin'){
-            return view('admin.dashboard');
-        }
-        else if(Auth::check()&&Auth::user()->user_type=='user'){
-            return view('dashboard');
-        }
+       $user=Auth::user();
+         if($user->user_type == UserType::Admin){
+          return view('admin.dashboard');
+         }
+         if($user->user_type == UserType::User){
+          return view('dashboard');
+         }
     }
     // all products function
      public function allProducts(){

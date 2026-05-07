@@ -28,9 +28,10 @@
 
     <!-- Responsive -->
     <link rel="stylesheet" href="{{ asset('front_end/css/responsive.css') }}" />
+  
 </head>
 
-<body>
+<body>  
   <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
@@ -135,7 +136,7 @@
                   </div>
                   <div class="col-md-5 ">
                     <div class="img-box">
-                      <img style="width:600px" src="{{ asset('front_end/images/image3.jpeg') }}" alt="" />
+                      <img style="width:500px" src="{{ asset('front_end/images/image3.jpeg') }}" alt="" />
                     </div>
                   </div>
                 </div>
@@ -177,7 +178,7 @@
         <div class="col-lg-7 col-md-6 px-0">
           <div class="map_container">
             <div class="map-responsive">
-              <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&q=Eiffel+Tower+Paris+France" width="600" height="300" frameborder="0" style="border:0; width: 100%; height:100%" allowfullscreen></iframe>
+              <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&q=Eiffel+Tower+cairo+cairo" width="600" height="300" frameborder="0" style="border:0; width: 100%; height:100%" allowfullscreen></iframe>
             </div>
           </div>
         </div>

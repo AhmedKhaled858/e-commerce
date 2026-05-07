@@ -13,12 +13,15 @@ use App\Enums\UserType;
 Route::get('/', [UserController::class, 'show'])->name('index');
 Route::get('/product_details/{id}', [UserController::class, 'productDetails'])->name('product_details');
 Route::get('/products', [UserController::class, 'allProducts'])->name('all.products');
-Route::get('/product/cart',[UserController::class,'productCart'])->middleware(['auth', 'verified'])->name('product.cart');
-Route::get('/product/cart/remove/{id}',[UserController::class,'removeFromCart'])->name('cart.remove');
 Route::get('/dashboard',[UserController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 
+Route::get('/product/cart',[UserController::class,'productCart'])->middleware(['auth', 'verified'])->name('product.cart');
+Route::get('/product/cart/remove/{id}',[UserController::class,'removeFromCart'])->name('cart.remove');
 Route::post('/cart/add', [UserController::class, 'addToCart'])->name('cart.add');
+Route::middleware('auth')->group(function () {
+    Route::post('/cart/update/{id}', [UserController::class, 'updateQuantity'])->name('cart.update');
+});
 
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 

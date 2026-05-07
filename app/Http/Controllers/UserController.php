@@ -18,64 +18,66 @@ class UserController extends Controller
     // user dashboard function
     public function index()
     {
-       $user=Auth::user();
-         if($user->user_type == UserType::Admin){
-          return view('admin.dashboard');
-         }
-         if($user->user_type == UserType::User){
-          return view('dashboard');
-         }
+        $user = Auth::user();
+        if ($user->user_type == UserType::Admin) {
+            return view('admin.dashboard');
+        }
+        if ($user->user_type == UserType::User) {
+            return view('dashboard');
+        }
     }
     // all products function
-     public function allProducts(){
+    public function allProducts()
+    {
         $cartCount = 0;
-        if(Auth::check()){
+        if (Auth::check()) {
             $cartCount = ProductCart::where('user_id', Auth::id())->sum('quantity');
         }
         $products = Product::all();
         return view('all-product', compact('products', 'cartCount'));
     }
     // product details function
-    public function productDetails($id){
-         $cartCount = 0;
-        if(Auth::check()){
+    public function productDetails($id)
+    {
+        $cartCount = 0;
+        if (Auth::check()) {
             $cartCount = ProductCart::where('user_id', Auth::id())->sum('quantity');
         }
         $product = Product::findOrFail($id);
-        return view('productdetails', compact('product' ,'cartCount'));
+        return view('productdetails', compact('product', 'cartCount'));
     }
     // add to cart function
-    public function addToCart(Request $request){
-        if(!Auth::check()){
+    public function addToCart(Request $request)
+    {
+        if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Please login to add products to cart.');
-        }
-        elseif($request->quantity < 1){
+        } elseif ($request->quantity < 1) {
             return redirect()->back()->with('error', 'Quantity must be at least 1.');
         }
-        
+
         $product = Product::findOrFail($request->product_id);
-        if($request->quantity > $product->quantity){
+        if ($request->quantity > $product->quantity) {
             return redirect()->back()->with('error', 'Quantity exceeds available stock.');
         }
-        $cart=ProductCart::where('user_id', Auth::id())->where('product_id', $request->product_id)->first();
-        if($cart){
+        $cart = ProductCart::where('user_id', Auth::id())->where('product_id', $request->product_id)->first();
+        if ($cart) {
             $cart->quantity += $request->quantity;
             $cart->save();
-        }
-        else{
+        } else {
             ProductCart::create([
-                'user_id'=>Auth::id(),
-                'product_id'=>$request->product_id,
-                'quantity'=>$request->quantity
+                'user_id' => Auth::id(),
+                'product_id' => $request->product_id,
+                'quantity' => $request->quantity,
             ]);
         }
         return redirect()->back()->with('success', 'Product added to cart successfully.');
     }
 
     // product cart function
-    public function productCart(){
-         $cartCount = 0;
-        if(Auth::check()){
+    public function productCart()
+    {
+        $cartCount = 0;
+        if (Auth::check()) {
             $cartCount = ProductCart::where('user_id', Auth::id())->sum('quantity');
         }
         $cartItems = ProductCart::where('user_id', Auth::id())->with('product')->get();
@@ -83,13 +85,60 @@ class UserController extends Controller
     }
 
     // remove from cart function
-    public function removeFromCart($id){
+    public function removeFromCart($id)
+    {
         $cartItem = ProductCart::findOrFail($id);
-        if($cartItem->user_id != Auth::id()){
+        if ($cartItem->user_id != Auth::id()) {
             return redirect()->back()->with('error', 'Unauthorized action.');
         }
         $cartItem->delete();
         return redirect()->back()->with('success', 'Product removed from cart successfully.');
+    }
+
+    // update cart function
+    public function updateQuantity(Request $request, $id)
+    {
+        try {
+            $cartItem = ProductCart::with('product')->findOrFail($id);
+
+            if ($request->action == 'increase') {
+                if ($cartItem->quantity + 1 > $cartItem->product->quantity) {
+                    return response()->json(
+                        [
+                            'error' => 'Quantity exceeds available stock.',
+                        ],
+                        400,
+                    );
+                }
+
+                $cartItem->quantity += 1;
+            } elseif ($request->action == 'decrease') {
+                if ($cartItem->quantity > 1) {
+                    $cartItem->quantity -= 1;
+                }
+            }
+
+            $cartItem->save();
+
+            $itemTotal = $cartItem->quantity * $cartItem->product->price;
+
+            $grandTotal = ProductCart::where('user_id', Auth::id())
+                ->with('product')
+                ->get()
+                ->sum(function ($item) {
+                    return $item->quantity * $item->product->price;
+                });
+
+            return response()->json([
+                'quantity' => $cartItem->quantity,
+
+                'itemTotal' => $itemTotal,
+
+                'grandTotal' => $grandTotal,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while updating the cart.'], 500);
+        }
     }
     /**
      * Show the form for creating a new resource.
@@ -116,7 +165,7 @@ class UserController extends Controller
     {
         // return view('index') with the categories and latest products added to the database;
         $cartCount = 0;
-        if(Auth::check()){
+        if (Auth::check()) {
             $cartCount = ProductCart::where('user_id', Auth::id())->sum('quantity');
         }
         $categories = Category::all();

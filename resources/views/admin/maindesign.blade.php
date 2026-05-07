@@ -158,7 +158,7 @@
             <ul class="list-unstyled">
                 <li> <a href="#"> <i class="icon-settings"></i>Demo </a></li>
                 <li> <a href="#"> <i class="icon-writing-whiteboard"></i>Demo </a></li>
-                <li> <a href="#"> <i class="icon-chart"></i>Demo </a></li>
+                <li> <a href="{{route('index')}}"> <i class="icon-computer"></i>Exit</a></li>
             </ul>
         </nav>
         <!-- Sidebar Navigation end-->

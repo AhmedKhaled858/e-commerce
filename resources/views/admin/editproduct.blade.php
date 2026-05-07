@@ -32,7 +32,7 @@
                         class="form-control" min ="0" step="0.01">
                     <br>
                     <label for="product_image">Product Image</label>
-                    <input type="file" name="product_image" id="product_image" value="{{ $product->product_image }}"
+                    <input type="file" name="product_image" id="product_image" value=""
                         class="form-control">
                     <br>
                     <label for="product_category">Category</label>

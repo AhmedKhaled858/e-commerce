@@ -3,14 +3,14 @@
 @section('searchresults')
 
 <div class="container py-5">
-    
+
     <h2 class="mb-4">
         Search Results For:
         <span class="text-primary">"{{ $keyword }}"</span>
     </h2>
 
     {{-- Products Results --}}
-    @if($products->count() > 0)
+    @if($products->isNotEmpty())
         <h4 class="mb-3">Products</h4>
 
         <div class="row">
@@ -18,9 +18,13 @@
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 shadow-sm border-0">
 
-                        <img src="{{ asset('storage/' . $product->product_image) }}" alt="{{ $product->title }}"
-                             class="card-img-top"
-                             style="height:220px; object-fit:cover;">
+                        <img 
+                            src="{{ asset('storage/' . $product->product_image) }}" 
+                            alt="{{ $product->title }}"
+                            class="card-img-top"
+                            style="height:220px; object-fit:cover;"
+                            loading="lazy"
+                        >
 
                         <div class="card-body">
 
@@ -49,7 +53,7 @@
 
 
     {{-- Categories Results --}}
-    @if($categories->count() > 0)
+    @if($categories->isNotEmpty())
 
         <h4 class="mt-5 mb-3">Categories</h4>
 
@@ -67,7 +71,7 @@
 
 
     {{-- No Results --}}
-    @if($products->count() == 0 && $categories->count() == 0)
+    @if($products->isEmpty() && $categories->isEmpty())
 
         <div class="text-center py-5">
             <h3>No Results Found</h3>

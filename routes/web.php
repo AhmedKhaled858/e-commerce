@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SearchController;
+use App\Enums\UserType;
+
 
 Route::get('/', [UserController::class, 'show'])->name('index');
 Route::get('/product_details/{id}', [UserController::class, 'productDetails'])->name('product_details');
@@ -24,8 +27,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+// i want to make a route group for admin and only admin can access those routes convert it to string and compare it with user type in the middleware
 
-Route::middleware('admin')->group(function(){
+    Route::middleware('admin')->group(function () {
     // Route::get('/test',[AdminController::class,'test']);
     Route::get('/createCategory',[AdminController::class,'createCategory'])->name('admin.createCategory');
     Route::post('/storeCategory',[AdminController::class,'storeCategory'])->name('admin.storeCategory');

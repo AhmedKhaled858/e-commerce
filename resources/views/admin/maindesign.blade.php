@@ -81,7 +81,8 @@
                                         class="d-block">lorem ipsum dolor sit amit</span><small
                                         class="date d-block">6:55am</small></div>
                             </a><a href="#" class="dropdown-item message d-flex align-items-center">
-                                <div class="profile"><img src="admin/img/avatar-5.jpg" alt="..." class="img-fluid">
+                                <div class="profile"><img src="admin/img/avatar-5.jpg" alt="..."
+                                        class="img-fluid">
                                     <div class="status offline"></div>
                                 </div>
                                 <div class="content"> <strong class="d-block">Sara Wood</strong><span
@@ -105,18 +106,18 @@
                                     class="mr-2"><span>French </span></a></div>
                     </div>
                     <!-- Log out               -->
-                    <div class="list-inline-item logout"> 
-                         <form method="POST" action="{{ route('logout') }}">
+                    <div class="list-inline-item logout">
+                        <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                                onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
-                                  <i class="icon-logout"></i>
+                                <i class="icon-logout"></i>
                             </x-dropdown-link>
-                            
+
                         </form>
-                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -133,32 +134,34 @@
                     <p>E-commerce</p>
                 </div>
             </div>
-           <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
-        <ul class="list-unstyled">
-                     <li class="active"><a href="{{ route('dashboard') }}"> <i class="icon-home"></i>Home </a></li>
-                      <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Category </a>
-                  <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                    <li><a href="{{ route('admin.createCategory') }}">Create Category</a></li>
-                    <li><a href="{{ route('admin.listCategories') }}">List Categories</a></li>
-                  </ul>
+            <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+            <ul class="list-unstyled">
+                <li class="active"><a href="{{ route('dashboard') }}"> <i class="icon-home"></i>Home </a></li>
+                <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
+                            class="icon-windows"></i>Category </a>
+                    <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                        <li><a href="{{ route('admin.createCategory') }}">Create Category</a></li>
+                        <li><a href="{{ route('admin.listCategories') }}">List Categories</a></li>
+                    </ul>
                 </li>
-                <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Product </a>
-                  <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                    <li><a href="{{ route('admin.addProduct') }}">Add Product</a></li>
-                    <li><a href="{{ route('admin.ViewProducts') }}">View Products</a></li>
-                    <li><a href="#">View Order</a></li>
-                  </ul>
+                <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
+                            class="icon-windows"></i>Product </a>
+                    <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                        <li><a href="{{ route('admin.addProduct') }}">Add Product</a></li>
+                        <li><a href="{{ route('admin.ViewProducts') }}">View Products</a></li>
+                        <li><a href="#">View Order</a></li>
+                    </ul>
                 </li>
-               
-            
-        </ul><span class="heading">Extras</span>
-        <ul class="list-unstyled">
-          <li> <a href="#"> <i class="icon-settings"></i>Demo </a></li>
-          <li> <a href="#"> <i class="icon-writing-whiteboard"></i>Demo </a></li>
-          <li> <a href="#"> <i class="icon-chart"></i>Demo </a></li>
-        </ul>
-      </nav>
-      <!-- Sidebar Navigation end-->
+
+
+            </ul><span class="heading">Extras</span>
+            <ul class="list-unstyled">
+                <li> <a href="#"> <i class="icon-settings"></i>Demo </a></li>
+                <li> <a href="#"> <i class="icon-writing-whiteboard"></i>Demo </a></li>
+                <li> <a href="#"> <i class="icon-chart"></i>Demo </a></li>
+            </ul>
+        </nav>
+        <!-- Sidebar Navigation end-->
         <div class="page-content">
             <div class="page-header">
                 <div class="container-fluid">
@@ -166,6 +169,17 @@
                 </div>
             </div>
             <section class="no-padding-top no-padding-bottom">
+                @if (session('success'))
+                    <div class="alert success">
+                        <i class="fa fa-check-circle"></i>
+                        {{ session('success') }}
+                    </div>
+                @elseif(session('error'))
+                    <div class="alert error">
+                        <i class="fa fa-times-circle"></i>
+                        {{ session('error') }}
+                    </div>
+                @endif
                 @yield('dashboard')
                 @yield('analysis')
                 @yield('listcategory')
@@ -176,7 +190,7 @@
             </section>
 
             <section>
-             
+
             </section>
             <footer class="footer">
                 <div class="footer__block block no-margin-bottom">
@@ -201,17 +215,17 @@
 
     <script>
         $('.dropdown-item').on('click', function(e) {
-    // منع الصفحة إنها تعمل Refresh لو اللينك فيه #
-    e.preventDefault();
+            // منع الصفحة إنها تعمل Refresh لو اللينك فيه #
+            e.preventDefault();
 
-    // 1. جلب بيانات اللغة اللي اتداس عليها
-    var newImg = $(this).find('img').attr('src');
-    var newText = $(this).find('span').text();
+            // 1. جلب بيانات اللغة اللي اتداس عليها
+            var newImg = $(this).find('img').attr('src');
+            var newText = $(this).find('span').text();
 
-    // 2. تحديث الزرار الرئيسي (العلم والنص)
-    $('#languages img').attr('src', newImg);
-    $('#languages span').text(newText);
-});
+            // 2. تحديث الزرار الرئيسي (العلم والنص)
+            $('#languages img').attr('src', newImg);
+            $('#languages span').text(newText);
+        });
     </script>
 </body>
 

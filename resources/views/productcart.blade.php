@@ -1,11 +1,7 @@
 @extends('maindesign')
 
 @section('product_cart')
-
-    
-
     <div class="container">
-
         @if (session('success'))
             <div class="alert success">
                 <i class="fa fa-check-circle"></i>
@@ -20,7 +16,6 @@
         <div class="heading_container heading_center mb-5 cart-title">
             <h2>My Cart</h2>
         </div>
-
         @if ($cartItems->count() > 0)
             <div class="table-responsive">
                 <table class="table table-bordered text-center align-middle">

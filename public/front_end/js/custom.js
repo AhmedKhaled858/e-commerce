@@ -27,3 +27,4 @@ $('.owl-carousel').owlCarousel({
         }
     }
 })
+// auto hide alert after 15 seconds for success and error messages id='alert'

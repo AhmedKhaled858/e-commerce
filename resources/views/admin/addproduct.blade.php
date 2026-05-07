@@ -1,20 +1,6 @@
 @extends('admin.maindesign')
 
 @section('addproduct')
-    @if (session('success'))
-        <div class="alert success">
-            <i class="fa fa-check-circle"></i>
-            {{ session('success') }}
-        </div>
-    @elseif(session('error'))
-        <div class="alert error">
-            <i class="fa fa-times-circle"></i>
-            {{ session('error') }}
-        </div>
-    @endif
-
-
-
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
@@ -101,20 +87,5 @@
         </div>
     </div>
 
-    <script>
-        setTimeout(function() {
-            const alert = document.querySelector('.alert');
-
-            if (alert) {
-                alert.style.transition = "0.5s";
-                alert.style.opacity = "0";
-                alert.style.transform = "translateY(-10px)";
-
-                setTimeout(() => {
-                    alert.style.display = "none";
-                }, 500);
-            }
-
-        }, 15000);
-    </script>
+    <script src="{{ asset('front_end/js/timeout.js') }}"></script>
 @endsection

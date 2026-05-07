@@ -4,32 +4,21 @@
     <div id="loadingScreen">
         <div class="spinner"></div>
     </div>
-    @if (session('success'))
-        <div class="alert success">
-            <i class="fa fa-check-circle"></i>
-            {{ session('success') }}
-        </div>
-    @elseif(session('error'))
-        <div class="alert error">
-            <i class="fa fa-times-circle"></i>
-            {{ session('error') }}
-        </div>
-    @endif
-
     <div class="container-fluid px-5">
         <h2>Products List</h2>
         <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
+                    <th>Title</th>
                     <th>Description</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Image</th>
                     <th>Category</th>
-                    <th>Actions</th>
+                    <th style="width:150px;">Actions</th>
                 </tr>
+                
             </thead>
             <tbody>
 
@@ -69,24 +58,6 @@
             </tbody>
 
         </table>
-        <script>
-       setTimeout(function () {
-        const alert = document.querySelector('.alert');
-
-        if (alert) {
-            alert.style.transition = "0.5s";
-            alert.style.opacity = "0";
-            alert.style.transform = "translateY(-10px)";
-
-            setTimeout(() => {
-                alert.style.display = "none";
-            }, 500);
-        }
-
-    }, 60000);
-        <script>
-            window.addEventListener("load", function() {
-                document.getElementById("loadingScreen").style.display = "none";
-            });
-        </script>
+        <script src="{{ asset('front_end/js/timeout.js') }}"></script>
+         
     @endsection

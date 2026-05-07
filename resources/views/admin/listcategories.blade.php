@@ -1,16 +1,6 @@
 @extends('admin.maindesign')
 @section('listcategory')
- @if (session('success'))
-            <div class="alert success">
-                <i class="fa fa-check-circle"></i>
-                {{ session('success') }}
-            </div>
-        @elseif(session('error'))
-            <div class="alert error">
-                <i class="fa fa-times-circle"></i>
-                {{ session('error') }}
-            </div>
-        @endif
+
 <div class="container">
     <h2>Categories List</h2>
     <table class="table table-bordered">
@@ -32,7 +22,9 @@
                     <td>{{ $category->id }}</td>
                     <td>{{ $category->name }}</td>
                     <td>
-                      <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
+
+                        <div style="display: flex; justify-content: center; gap: 10px;">
+                             <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
                                                 data-toggle="modal" href="#edit{{ $category->id }}"><i
                                                     class="las la-pen"></i>Edit</a>
                         <form action="{{ route('admin.deleteCategory', $category->id) }}" method="POST" style="display: inline;">
@@ -40,6 +32,8 @@
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                         </form>
+                        </div>
+                     
                     </td>
 
                 </tr>
@@ -48,12 +42,5 @@
             @endif
         </tbody>
     </table>
-    <script>
-    setTimeout(function () {
-        let alertBox = document.getElementById('successAlert');
-        if (alertBox) {
-            alertBox.style.display = 'none';
-        }
-    }, 3000); 
-</script>
+    <script src="{{ asset('front_end/js/timeout.js') }}"></script>
 @endsection

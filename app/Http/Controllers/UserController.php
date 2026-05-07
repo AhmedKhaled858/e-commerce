@@ -46,6 +46,13 @@ class UserController extends Controller
     }
     // add to cart function
     public function addToCart(Request $request){
+        if(!Auth::check()){
+            return redirect()->route('login')->with('error', 'Please login to add products to cart.');
+        }
+        elseif($request->quantity < 1){
+            return redirect()->back()->with('error', 'Quantity must be at least 1.');
+        }
+        
         $product = Product::findOrFail($request->product_id);
         if($request->quantity > $product->quantity){
             return redirect()->back()->with('error', 'Quantity exceeds available stock.');

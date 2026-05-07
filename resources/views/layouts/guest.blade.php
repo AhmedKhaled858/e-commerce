@@ -1,10 +1,19 @@
 <!DOCTYPE html>
+
+   
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+          <link rel="stylesheet" href="{{ asset('front_end/css/bootstrap.css') }}" />
+
+    <!-- Main Style -->
+    <link rel="stylesheet" href="{{ asset('front_end/css/style.css') }}" />
+
+    <!-- Responsive -->
+    <link rel="stylesheet" href="{{ asset('front_end/css/responsive.css') }}" />
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
@@ -13,8 +22,20 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     </head>
     <body class="font-sans text-gray-900 antialiased">
+          @if (session('success'))
+            <div class="alert success">
+                <i class="fa fa-check-circle"></i>
+                {{ session('success') }}
+            </div>
+        @elseif(session('error'))
+            <div class="alert error">
+                <i class="fa fa-times-circle"></i>
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
             <div>
                 <a href="/">
@@ -27,4 +48,5 @@
             </div>
         </div>
     </body>
+        <script src="{{ asset('front_end/js/timeout.js') }}"></script>
 </html>

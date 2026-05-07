@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use App\Enums\UserType;
 
 class AdminMiddleware
 {
@@ -16,7 +17,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::check()&&Auth::user()->user_type=='admin'){
+        if(Auth::check()&&Auth::user()->user_type==UserType::Admin){
             return $next($request);
         }
 

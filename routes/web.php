@@ -8,17 +8,20 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
 use App\Enums\UserType;
-
+use App\Http\Controllers\CheckoutController;
 
 Route::get('/', [UserController::class, 'show'])->name('index');
 Route::get('/product_details/{id}', [UserController::class, 'productDetails'])->name('product_details');
 Route::get('/products', [UserController::class, 'allProducts'])->name('all.products');
 Route::get('/dashboard',[UserController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/contact_us',[UserController::class,'contactUs'])->name('contact_us');
 
 
 Route::get('/product/cart',[UserController::class,'productCart'])->middleware(['auth', 'verified'])->name('product.cart');
 Route::get('/product/cart/remove/{id}',[UserController::class,'removeFromCart'])->name('cart.remove');
 Route::post('/cart/add', [UserController::class, 'addToCart'])->name('cart.add');
+Route::get('/checkout', [CheckoutController::class, 'index'])->middleware(['auth', 'verified'])->name('checkout.index');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 Route::middleware('auth')->group(function () {
     Route::post('/cart/update/{id}', [UserController::class, 'updateQuantity'])->name('cart.update');
 });

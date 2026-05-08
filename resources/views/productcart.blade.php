@@ -120,7 +120,7 @@
             </div>
 
             <div class="text-end mt-4">
-                <a href="#" class="checkout-btn">
+                <a href="{{ route('checkout.index') }}" class="checkout-btn">
                     <i class="fa fa-shopping-cart"></i>
                     Checkout
                 </a>

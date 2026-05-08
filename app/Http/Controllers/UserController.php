@@ -26,6 +26,12 @@ class UserController extends Controller
             return view('dashboard');
         }
     }
+        // contact us function
+        public function contactUs()
+        {
+            return view('contact');
+        }
+     
     // all products function
     public function allProducts()
     {

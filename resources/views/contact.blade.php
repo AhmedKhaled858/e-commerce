@@ -11,7 +11,7 @@
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <link rel="shortcut icon" href="{{ asset('front_end/images/favicon.png') }}" type="image/x-icon">
+  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
   <title>
     Giftos
@@ -20,23 +20,21 @@
   <!-- slider stylesheet -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
- <!-- Bootstrap -->
-    <link rel="stylesheet" href="{{ asset('front_end/css/bootstrap.css') }}" />
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="front_end/css/bootstrap.css" />
 
-    <!-- Main Style -->
-    <link rel="stylesheet" href="{{ asset('front_end/css/style.css') }}" />
-
-    <!-- Responsive -->
-    <link rel="stylesheet" href="{{ asset('front_end/css/responsive.css') }}" />
-  
+  <!-- Custom styles for this template -->
+  <link href="front_end/css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="front_end/css/responsive.css" rel="stylesheet" />
 </head>
 
-<body>  
+<body>
   <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
       <nav class="navbar navbar-expand-lg custom_nav-container ">
-        <a class="navbar-brand" href="{{ route('index') }}">
+        <a class="navbar-brand" href="index.html">
           <span>
             Giftos
           </span>
@@ -45,9 +43,9 @@
           <span class=""></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse innerpage_navbar" id="navbarSupportedContent">
           <ul class="navbar-nav  ">
-            <li class="nav-item active">
+            <li class="nav-item ">
               <a class="nav-link" href="{{route('index')}}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
@@ -65,41 +63,19 @@
                 Testimonial
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{route('contact_us')}}">Contact Us</a>
+            <li class="nav-item active">
+              <a class="nav-link" href="contact.html">Contact Us</a>
             </li>
           </ul>
           <div class="user_option">
-            @if (Auth::check())
-              <a href="{{ route('dashboard') }}">
-              <i class="fa fa-user" aria-hidden="true"></i>
-              <span>
-                Dashboard
-              </span>
-            </a>
-            @else
-              <a href="{{ route('login') }}">
+            <a href="">
               <i class="fa fa-user" aria-hidden="true"></i>
               <span>
                 Login
               </span>
             </a>
-             <a href="{{ route('register') }}">
-              <i class="fa fa-user-plus" aria-hidden="true"></i>
-              <span>
-                Sign Up
-              </span>
-            </a>
-            @endif
-          
-            <a href="{{ route('product.cart') }}" style="position:relative;">
-                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-
-                @if($cartCount >= 0)
-                    <span class="cart-count">
-                        {{ $cartCount }}
-                    </span>
-                @endif
+            <a href="">
+              <i class="fa fa-shopping-bag" aria-hidden="true"></i>
             </a>
             <form class="form-inline ">
               <button class="btn nav_search-btn" type="submit">
@@ -111,62 +87,13 @@
       </nav>
     </header>
     <!-- end header section -->
-    <!-- slider section -->
 
-    <section class="slider_section">
-      <div class="slider_container">
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <div class="container-fluid">
-                <div class="row">
-                  <div class="col-md-7">
-                    <div class="detail-box"> 
-                      <h1>
-                        Welcome To Our <br>
-                        Gift Shop
-                      </h1>
-                      <p>
-                        Sequi perspiciatis nulla reiciendis, rem, tenetur impedit, eveniet non necessitatibus error distinctio mollitia suscipit. Nostrum fugit doloribus consequatur distinctio esse, possimus maiores aliquid repellat beatae cum, perspiciatis enim, accusantium perferendis.
-                      </p>
-                      <a href="{{ route('contact_us') }}">
-                        Contact Us
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-md-5 ">
-                    <div class="img-box">
-                      <img style="width:500px" src="{{ asset('front_end/images/image3.jpeg') }}" alt="" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-          
-        </div>
-      </div>
-    </section>
-
-    <!-- end slider section -->
   </div>
   <!-- end hero area -->
 
-  <!-- shop section -->
-
-  <section class="shop_section layout_padding">
-        @yield('product_details')
-        @yield('index')
-        @yield('product_cart')
-        @yield('checkout')
-  </section>
-
-  <!-- end shop section -->
-
   <!-- contact section -->
 
-  <section class="contact_section ">
+  <section class="contact_section layout_padding">
     <div class="container px-0">
       <div class="heading_container ">
         <h2 class="">
@@ -179,23 +106,23 @@
         <div class="col-lg-7 col-md-6 px-0">
           <div class="map_container">
             <div class="map-responsive">
-              <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&q=Eiffel+Tower+cairo+cairo" width="600" height="300" frameborder="0" style="border:0; width: 100%; height:100%" allowfullscreen></iframe>
+              <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&q=Eiffel+Tower+Paris+France" width="600" height="300" frameborder="0" style="border:0; width: 100%; height:100%" allowfullscreen></iframe>
             </div>
           </div>
         </div>
         <div class="col-md-6 col-lg-5 px-0">
           <form action="#">
             <div>
-              <input type="text" id="name" autocomplete="off" placeholder="Name" />
+              <input type="text" placeholder="Name" />
             </div>
             <div>
-              <input type="email" id="email" autocomplete="off" placeholder="Email" />
+              <input type="email" placeholder="Email" />
             </div>
             <div>
-              <input type="text" id="phone" autocomplete="off" placeholder="Phone" />
+              <input type="text" placeholder="Phone" />
             </div>
             <div>
-              <input type="text" class="message-box" id="message" autocomplete="off" placeholder="Message" />
+              <input type="text" class="message-box" placeholder="Message" />
             </div>
             <div class="d-flex ">
               <button>
@@ -208,11 +135,7 @@
     </div>
   </section>
 
-  <br><br><br>
-
   <!-- end contact section -->
-
-   
 
   <!-- info section -->
 
@@ -250,7 +173,7 @@
                 Newsletter
               </h5>
               <form action="#">
-                <input type="email" id="email" autocomplete="off" placeholder="Enter your email">
+                <input type="email" placeholder="Enter your email">
                 <button>
                   Subscribe
                 </button>
@@ -292,7 +215,7 @@
       <div class="container">
         <p>
           &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">Web Tech Knowledge</a>
+          <a href="https://html.design/">Free Html Templates</a>
         </p>
       </div>
     </footer>
@@ -301,10 +224,14 @@
   </section>
 
   <!-- end info section -->
-  <script src="{{ asset('front_end/js/jquery-3.4.1.min.js') }}"></script>
-  <script src="{{ asset('front_end/js/bootstrap.js') }}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-  <script src="{{ asset('front_end/js/custom.js') }}"></script>
+
+
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <script src="js/custom.js"></script>
+
 </body>
 
 </html>

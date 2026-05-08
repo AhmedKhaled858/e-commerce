@@ -3,8 +3,8 @@
 
 <div class="container">
     <h2>Categories List</h2>
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
             <tr>
                 <th>ID</th>
                 <th>Name</th>

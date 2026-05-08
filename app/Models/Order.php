@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\UserAddress;
 use App\Models\OrderItem;
 use App\Enums\OrderStatus;
-
+use App\Enums\PaymentMethod;
 
 class Order extends Model
 {
@@ -28,6 +28,7 @@ class Order extends Model
     protected $casts = [
         'total_amount' => 'decimal:2',
         'status' => OrderStatus::class,
+        'payment_method' => PaymentMethod::class,
     ];
     public function items(){
         return $this->hasMany(OrderItem::class);

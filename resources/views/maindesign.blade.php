@@ -28,6 +28,9 @@
 
     <!-- Responsive -->
     <link rel="stylesheet" href="{{ asset('front_end/css/responsive.css') }}" />
+
+    {{-- Checkout Style --}}
+    <link rel="stylesheet" href="{{ asset('front_end/css/checkout_style.css') }}" />
   
 </head>
 

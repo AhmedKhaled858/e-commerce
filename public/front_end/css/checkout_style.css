@@ -1,0 +1,88 @@
+     :root {
+     --primary-color: #4f46e5;
+     /* Indigo */
+     --bg-subtle: #f8fafc;
+     }
+
+     body {
+     background-color: var(--bg-subtle);
+     font-family: 'Inter', sans-serif;
+     }
+
+     /* Progress Line Design */
+     .checkout-step {
+     position: relative;
+     padding-left: 45px;
+     margin-bottom: 30px;
+     }
+
+     .checkout-step::before {
+     content: "";
+     position: absolute;
+     left: 15px;
+     top: 35px;
+     bottom: -20px;
+     width: 2px;
+     background: #e2e8f0;
+     }
+
+     .checkout-step:last-child::before {
+     display: none;
+     }
+
+     .step-icon {
+     position: absolute;
+     left: 0;
+     top: 0;
+     width: 32px;
+     height: 32px;
+     border-radius: 50%;
+     background: white;
+     border: 2px solid var(--primary-color);
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     z-index: 2;
+     color: var(--primary-color);
+     font-weight: bold;
+     }
+
+     .glass-card {
+     background: rgba(255, 255, 255, 0.9);
+     border: 1px solid rgba(255, 255, 255, 0.2);
+     border-radius: 16px;
+     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+     }
+
+     .payment-select-box {
+     cursor: pointer;
+     transition: 0.2s;
+     border: 2px solid #f1f5f9;
+     border-radius: 12px;
+     }
+
+     .payment-select-box:hover {
+     border-color: var(--primary-color);
+     }
+
+     .form-control {
+     border-radius: 10px;
+     padding: 12px;
+     border: 1px solid #e2e8f0;
+     }
+
+     .btn-checkout {
+     background: var(--primary-color);
+     color: white;
+     border-radius: 12px;
+     padding: 15px;
+     font-weight: 600;
+     letter-spacing: 0.5px;
+     transition: 0.3s;
+     }
+
+     .btn-checkout:hover {
+     background: #4338ca;
+     transform: translateY(-2px);
+     box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+     }

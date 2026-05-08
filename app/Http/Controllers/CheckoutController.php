@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PaymentMethod;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,7 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+
         $cartItems = ProductCart::where('user_id', Auth::id())->get();
         if ($cartItems->isEmpty()) {
             return redirect()->route('product.cart')->with('error', 'Your cart is empty.');
@@ -55,7 +57,7 @@ class CheckoutController extends Controller
                 's_phone_number' => $request->phone,
                 's_address' => $request->address,
                 's_city' => $request->city,
-                'payment_method' => 'cash_on_delivery',
+                'payment_method' => PaymentMethod::from($request->payment_method),
                 'status' => 'pending',
             ]);
             foreach ($cartItems as $item) {

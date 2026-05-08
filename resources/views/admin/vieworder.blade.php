@@ -98,7 +98,7 @@
                                 </a>
 
                                 {{-- Edit Button: Pencil Icon --}}
-                                <button type="button" class="btn btn-sm btn-primary edit-order-btn" title="Edit Status">
+                                <button type="button" class="btn btn-sm btn-warning edit-order-btn" title="Edit Status">
                                     <i class="fa fa-edit"></i>
                                 </button>
 

@@ -8,7 +8,7 @@
 
         <h2>Products List</h2>
         <table class="table table-bordered">
-            <thead>
+            <thead class="table-light">
                 <tr>
                     <th>ID</th>
                     <th>Title</th>

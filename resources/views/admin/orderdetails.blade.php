@@ -118,7 +118,7 @@
                 <div class="card-body">
                     <div class="mb-3 d-flex justify-content-between">
                         <span class="text-muted">Method:</span>
-                        <span class="badge bg-primary px-3">{{ strtoupper($order->payment_method) }}</span>
+                        <span class="badge bg-primary px-3">{{ $order->payment_method->label() }}</span>
                     </div>
                     <div class="stats-box">
                         <span class="text-muted d-block mb-1">Total Bill</span>

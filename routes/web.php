@@ -47,6 +47,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/ViewProducts',[AdminController::class,'ViewProducts'])->name('admin.ViewProducts');
     Route::delete('/deleteProduct/{id}',[AdminController::class,'deleteProduct'])->name('admin.deleteProduct');
     Route::post('/editProduct/{id}',[AdminController::class,'editProduct'])->name('admin.editProduct');
+    Route::get('/ViewOrders',[AdminController::class,'ViewOrders'])->name('admin.ViewOrders');
+   Route::get('/OrderDetails/{id}',[AdminController::class,'OrderDetails'])->name('admin.OrderDetails');
+   Route::post('/updateOrderStatus/{id}',[AdminController::class,'updateOrderStatus'])->name('admin.updateOrderStatus');
 });
 
 //! route for storing reviews

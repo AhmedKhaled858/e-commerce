@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Order;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
@@ -58,6 +59,7 @@ class AdminController extends Controller
         return view('admin.addproduct', compact('categories'));
     }
     // store product function with image upload
+
     public function storeProduct(StoreProductRequest $request)
     {
         $data = [
@@ -129,4 +131,28 @@ class AdminController extends Controller
         }
     }
     //? end functions for product
+    // view orders function
+    public function ViewOrders()
+    {
+        $orders = Order::with(['user', 'items.product'])
+            ->orderBy('created_at', 'asc')
+            ->paginate(5);
+
+        return view('admin.vieworder', compact('orders'));
+    }
+    // order details function
+    public function OrderDetails($id)
+    {
+        $order = Order::with(['user', 'items.product'])->findOrFail($id);
+        return view('admin.orderdetails', compact('order'));
+    }
+    // update order status function
+    public function updateOrderStatus(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = $request->input('status');
+        $order->save();
+
+        return redirect()->route('admin.OrderDetails', ['id' => $id])->with('success', 'Order status updated successfully');
+    }
 }

@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\UserAddress;
+use App\Models\OrderItem;
+use App\Enums\OrderStatus;
 
 
 class Order extends Model
 {
     //
+
     protected $fillable = [
         'user_id',
         'order_number',
@@ -21,7 +24,15 @@ class Order extends Model
         'payment_method',
 
     ];
+
+    protected $casts = [
+        'total_amount' => 'decimal:2',
+        'status' => OrderStatus::class,
+    ];
     public function items(){
         return $this->hasMany(OrderItem::class);
+    }
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

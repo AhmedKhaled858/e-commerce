@@ -5,6 +5,7 @@
         <div class="spinner"></div>
     </div>
     <div class="container-fluid px-5">
+
         <h2>Products List</h2>
         <table class="table table-bordered">
             <thead>
@@ -18,7 +19,7 @@
                     <th>Category</th>
                     <th style="width:150px;">Actions</th>
                 </tr>
-                
+
             </thead>
             <tbody>
 
@@ -58,6 +59,7 @@
             </tbody>
 
         </table>
-        <script src="{{ asset('front_end/js/timeout.js') }}"></script>
-         
+    </div>
+
+
     @endsection

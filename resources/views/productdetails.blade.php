@@ -2,92 +2,118 @@
 
 @section('product_details')
 
-    <div class="container">
-        @if (session('success'))
-            <div class="alert success">
-                <i class="fa fa-check-circle"></i>
-                {{ session('success') }}
-            </div>
-        @elseif(session('error'))
-            <div class="alert error">
-                <i class="fa fa-times-circle"></i>
-                {{ session('error') }}
-            </div>
-        @endif
+    <div class="container product-details-page">
 
+        {{-- Heading --}}
+        <div class="heading_container heading_center mb-5 position-relative">
+            @if (session('success'))
+                <script>
+                    window.flashSuccess = @json(session('success'));
+                </script>
+            @endif
 
-        <div class="heading_container heading_center mb-4 position-relative">
+            @if (session('error'))
+                <script>
+                    window.flashError = @json(session('error'));
+                </script>
+            @endif
 
-            <a href="{{ url('/') }}" class="text-dark text-decoration-none position-absolute"
-                style="left:0; top:50%; transform:translateY(-50%); font-size:16px;">
-                <i class="fa fa-arrow-left"></i> Back to Product
+            {{-- Back Button --}}
+            <a href="{{ url('/') }}" class="back-btn text-decoration-none position-absolute"
+                style="left:0; top:50%; transform:translateY(-50%);">
+
+                <i class="fa fa-arrow-left"></i>
+                Back to Product
+
             </a>
-            <div class="heading_container heading_center mb-5 Product-title">
-                <h2>Product Details</h2>
-            </div>
 
+            {{-- Title --}}
+            <div class="heading_container heading_center Product-title">
+
+                <h2>
+                    Product Details
+                </h2>
+
+            </div>
 
         </div>
 
-        <div class="row align-items-center">
 
+        {{-- Product Section --}}
+        <div class="row align-items-center g-5">
 
-            <div class="col-md-6">
+            {{-- Product Image --}}
+            <div class="col-lg-6">
+
                 <div class="img-box text-center">
+
                     <img src="{{ asset('storage/' . $product->product_image) }}" alt="{{ $product->title }}"
-                        class="img-fluid rounded shadow" style="max-height:500px; object-fit:cover;">
+                        class="product-image">
+
                 </div>
+
             </div>
 
-            <!-- Product Info -->
-            <div class="col-md-6">
 
-                <h2 class="mb-3">{{ $product->title }}</h2>
+            {{-- Product Info --}}
+            <div class="col-lg-6">
 
-                <h4 class="text-success mb-4">
+                {{-- Product Name --}}
+                <h2 class="product-name mb-3">
+                    {{ $product->title }}
+                </h2>
+
+                {{-- Product Price --}}
+                <h4 class="product-price mb-4">
                     ${{ $product->price }}
                 </h4>
 
-                <p style="line-height:1.9;">
+                {{-- Description --}}
+                <p class="product-description">
                     {{ $product->description }}
                 </p>
 
-                {{-- <h6 class="mt-4">
-                Quantity:
-                <span class="text-primary">
-                    {{ $product->quantity }}
-                </span>
-            </h6> --}}
 
+                {{-- Stock --}}
                 @if ($product->quantity > 0)
-                    <span class="badge bg-success p-2 mt-2">
+                    <span class="custom-badge mt-2 d-inline-block">
                         In Stock
                     </span>
                 @else
-                    <span class="badge bg-danger p-2 mt-2">
-                        Out of Stock
+                    <span class="custom-badge mt-2 d-inline-block">
+                        Out Of Stock
                     </span>
                 @endif
 
+
+                {{-- Cart Form --}}
                 <div class="mt-4">
 
                     <form action="{{ route('cart.add') }}" method="POST">
+
                         @csrf
 
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
 
 
-                        <label class="fw-bold mb-2 d-block">Select Quantity</label>
+                        {{-- Quantity --}}
+                        <label class="fw-bold mb-3 d-block">
+                            Select Quantity
+                        </label>
 
-                        <div class="qty-box">
+                        <div class="qty-box mb-3">
+
                             <input type="number" name="quantity" value="1" min="1"
                                 max="{{ $product->quantity }}" class="qty-input">
+
                         </div>
 
-                        <!-- Add To Cart -->
+
+                        {{-- Add To Cart --}}
                         <button type="submit" class="cart-btn" @if ($product->quantity == 0) disabled @endif>
 
-                            <i class="fa fa-shopping-cart"></i>
+                            <i class="fa fa-shopping-cart me-2"></i>
+
                             Add To Cart
 
                         </button>
@@ -100,91 +126,129 @@
 
         </div>
 
-        <!-- Review Section -->
-        <div class="mt-5">
 
-            <h3 class="mb-4">Write Review</h3>
+        {{-- Review Section --}}
+        <div class="mt-5 pt-5">
+
+            <h3 class="section-title mb-4">
+                Write Review
+            </h3>
 
             @auth
+
                 <form action="{{ route('reviews.store') }}" method="POST">
+
                     @csrf
 
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                    <textarea name="review" class="form-control mb-3" rows="4" placeholder="Write your review here..."></textarea>
 
-                    <select name="rating" class="form-control mb-3">
-                        <option value="">Select Rating</option>
-                        <option value="5">⭐⭐⭐⭐⭐</option>
-                        <option value="4">⭐⭐⭐⭐</option>
-                        <option value="3">⭐⭐⭐</option>
-                        <option value="2">⭐⭐</option>
-                        <option value="1">⭐</option>
+                    {{-- Review Text --}}
+                    <textarea name="review" rows="4" class="custom-textarea mb-4" placeholder="Write your review here..."></textarea>
+
+
+                    {{-- Rating --}}
+                    <select name="rating" class="custom-select mb-4">
+
+                        <option value="">
+                            Select Rating
+                        </option>
+
+                        <option value="5">
+                            ★★★★★
+                        </option>
+
+                        <option value="4">
+                            ★★★★☆
+                        </option>
+
+                        <option value="3">
+                            ★★★☆☆
+                        </option>
+
+                        <option value="2">
+                            ★★☆☆☆
+                        </option>
+
+                        <option value="1">
+                            ★☆☆☆☆
+                        </option>
+
                     </select>
 
-                    <button type="submit" class="btn btn-dark px-4">
+
+                    {{-- Submit Review --}}
+                    <button type="submit" class="review-btn">
+
                         Submit Review
+
                     </button>
+
                 </form>
             @else
-                <div class="alert alert-warning">
-                    Please login first to add your review.
+                <div class="login-warning mt-4">
+                    <i class="fa fa-lock"></i>
+                    <span>Please login first to add your review.</span>
                 </div>
             @endauth
 
         </div>
-        <!-- Display Reviews -->
-        <div class="mt-5">
-            <h3 class="mb-4">Customer Reviews</h3>
+
+
+        {{-- Reviews --}}
+        <div class="mt-5 pt-4">
+
+            <h3 class="section-title mb-4">
+
+                Customer Reviews
+
+            </h3>
 
             @forelse($product->reviews as $review)
-                <div class="card mb-3 shadow-sm">
+                <div class="review-card">
+
                     <div class="card-body">
 
-                        <h5 class="mb-1">
+                        {{-- User --}}
+                        <h5 class="review-user mb-2">
+
                             {{ $review->user->name ?? 'Anonymous' }}
+
                         </h5>
 
-                        <div class="mb-2">
+
+                        {{-- Stars --}}
+                        <div class="review-stars mb-3">
+
                             @for ($i = 1; $i <= $review->rating; $i++)
-                                ⭐
+                                ★
                             @endfor
+
                         </div>
 
-                        <p class="mb-0 text-muted">
+
+                        {{-- Review --}}
+                        <p class="review-text mb-0">
+
                             {{ $review->review }}
+
                         </p>
 
                     </div>
+
                 </div>
 
             @empty
 
-                <div class="alert alert-secondary">
+                <div class="empty-review">
+
                     No reviews yet.
+
                 </div>
             @endforelse
 
         </div>
 
-
-
     </div>
-    <script>
-        // Auto-hide success message after 3 seconds
-         setTimeout(function() {
-            const alert = document.querySelector('.alert');
 
-            if (alert) {
-                alert.style.transition = "0.5s";
-                alert.style.opacity = "0";
-                alert.style.transform = "translateY(-10px)";
-
-                setTimeout(() => {
-                    alert.style.display = "none";
-                }, 500);
-            }
-
-        }, 15000);
-    </script>
 @endsection

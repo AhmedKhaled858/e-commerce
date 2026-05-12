@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset('front_end/css/bootstrap.css') }}" />
 
     <!-- Main Style -->
+    
     <link rel="stylesheet" href="{{ asset('front_end/css/style.css') }}" />
 
     <!-- Responsive -->
@@ -308,6 +309,7 @@
   <script src="{{ asset('front_end/js/bootstrap.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
   <script src="{{ asset('front_end/js/custom.js') }}"></script>
+  <script src="{{ asset('front_end/js/timeout.js') }}"></script>
 </body>
 
 </html>

@@ -22,9 +22,8 @@
     <link rel="stylesheet" href="{{ asset('admin/css/custom.css') }}">
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{ asset('admin/img/favicon.ico') }}">
-    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
+
 </head>
 
 <body>
@@ -60,28 +59,28 @@
                                 class="badge dashbg-1">5</span></a>
                         <div aria-labelledby="navbarDropdownMenuLink1" class="dropdown-menu messages"><a href="#"
                                 class="dropdown-item message d-flex align-items-center">
-                                <div class="profile"><img src="admin/img/avatar-3.jpg" alt="..." class="img-fluid">
+                                <div class="profile"><img src="{{asset('admin/img/avatar-3.jpg')}}" alt="..." class="img-fluid">
                                     <div class="status online"></div>
                                 </div>
                                 <div class="content"> <strong class="d-block">Nadia Halsey</strong><span
                                         class="d-block">lorem ipsum dolor sit amit</span><small
                                         class="date d-block">9:30am</small></div>
                             </a><a href="#" class="dropdown-item message d-flex align-items-center">
-                                <div class="profile"><img src="admin/img/avatar-2.jpg" alt="..." class="img-fluid">
+                                <div class="profile"><img src="{{asset('admin/img/avatar-2.jpg')}}" alt="..." class="img-fluid">
                                     <div class="status away"></div>
                                 </div>
                                 <div class="content"> <strong class="d-block">Peter Ramsy</strong><span
                                         class="d-block">lorem ipsum dolor sit amit</span><small
                                         class="date d-block">7:40am</small></div>
                             </a><a href="#" class="dropdown-item message d-flex align-items-center">
-                                <div class="profile"><img src="admin/img/avatar-1.jpg" alt="..." class="img-fluid">
+                                <div class="profile"><img src="{{asset('admin/img/avatar-1.jpg')}}" alt="..." class="img-fluid">
                                     <div class="status busy"></div>
                                 </div>
                                 <div class="content"> <strong class="d-block">Sam Kaheil</strong><span
                                         class="d-block">lorem ipsum dolor sit amit</span><small
                                         class="date d-block">6:55am</small></div>
                             </a><a href="#" class="dropdown-item message d-flex align-items-center">
-                                <div class="profile"><img src="admin/img/avatar-5.jpg" alt="..."
+                                <div class="profile"><img src="{{asset('admin/img/avatar-5.jpg')}}" alt="..."
                                         class="img-fluid">
                                     <div class="status offline"></div>
                                 </div>
@@ -97,12 +96,12 @@
                     <!-- Languages dropdown    -->
                     <div class="list-inline-item dropdown"><a id="languages" rel="nofollow" data-target="#"
                             href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                            class="nav-link language dropdown-toggle"><img src="admin/img/flags/us_flag.jpg"
+                            class="nav-link language dropdown-toggle"><img  src="{{asset('admin/img/flags/us_flag.jpg')}}"
                                 alt="English"><span class="d-none d-sm-inline-block">English</span></a>
                         <div aria-labelledby="languages" class="dropdown-menu"><a rel="nofollow" href="#"
-                                class="dropdown-item"> <img src="admin/img/flags/germany_flag.jpg" alt="English"
+                                class="dropdown-item"> <img src="{{asset('admin/img/flags/germany_flag.jpg')}}" alt="English"
                                     class="mr-2"><span>German</span></a><a rel="nofollow" href="#"
-                                class="dropdown-item"> <img src="admin/img/flags/french_flag.jpg" alt="English"
+                                class="dropdown-item"> <img src="{{asset('admin/img/flags/french_flag.jpg')}}" alt="English"
                                     class="mr-2"><span>French </span></a></div>
                     </div>
                     <!-- Log out               -->
@@ -127,7 +126,7 @@
         <nav id="sidebar">
             <!-- Sidebar Header-->
             <div class="sidebar-header d-flex align-items-center">
-                <div class="avatar"><img src="admin/img/avatar-6.jpg" alt="..."
+                <div class="avatar"><img src="{{asset('admin/img/avatar-6.jpg')}}" alt="..."
                         class="img-fluid rounded-circle"></div>
                 <div class="title">
                     <h1 class="h5">{{ Auth::user()->name }}</h1>
@@ -212,9 +211,9 @@
     <script src="{{ asset('admin/vendor/jquery.cookie/jquery.cookie.js') }}"></script>
     <script src="{{ asset('admin/vendor/chart.js/Chart.min.js') }}"></script>
     <script src="{{ asset('admin/vendor/jquery-validation/jquery.validate.min.js') }}"></script>
-    {{-- <script src="admin/js/charts-home.js"></script> --}}
+    <script src="{{asset('admin/js/charts-home.js') }}"></script>
     <script src="{{ asset('admin/js/front.js') }}"></script>
-        <script src="{{ asset('front_end/js/timeout.js') }}"></script>
+    <script src="{{ asset('front_end/js/timeout.js') }}"></script>
 
 
     <script>

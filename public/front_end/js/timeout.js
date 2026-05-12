@@ -1,18 +1,50 @@
- setTimeout(function() {
- const alert = document.querySelector('.alert');
+// Show alert (new reusable version)
+function showAlert(message, type = "success") {
+const alert = document.createElement("div");
 
- if (alert) {
- alert.style.transition = "0.5s";
- alert.style.opacity = "0";
- alert.style.transform = "translateY(-10px)";
+alert.className = `alert ${type}`;
+alert.innerText = message;
 
- setTimeout(() => {
- alert.style.display = "none";
- }, 500);
- }
+document.body.appendChild(alert);
 
- }, 3000);
+// initial hidden state
+alert.style.opacity = "0";
+alert.style.transform = "translateY(-10px)";
+alert.style.transition = "0.4s ease";
 
- window.addEventListener("load", function() {
- document.getElementById("loadingScreen").style.display = "none";
- });
+// show animation
+setTimeout(() => {
+alert.style.opacity = "1";
+alert.style.transform = "translateY(0)";
+}, 50);
+
+// hide after 3s
+setTimeout(() => {
+alert.style.opacity = "0";
+alert.style.transform = "translateY(-10px)";
+
+setTimeout(() => {
+alert.remove();
+}, 400);
+}, 3000);
+}
+
+
+// Laravel flash message handler
+document.addEventListener("DOMContentLoaded", function () {
+if (window.flashSuccess) {
+showAlert(window.flashSuccess, "success");
+}
+
+if (window.flashError) {
+showAlert(window.flashError, "error");
+}
+});
+
+// Loading screen
+window.addEventListener("load", function () {
+const loading = document.getElementById("loadingScreen");
+if (loading) {
+loading.style.display = "none";
+}
+});

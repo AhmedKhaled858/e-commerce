@@ -95,29 +95,29 @@ Open in browser:
 http://127.0.0.1:8000
 
 ---
-
-## 📁 Project Structure
+📁 Project Structure
 
 app/
- ├── Http/
- │    ├── Controllers/
- │    ├── Middleware/
- ├── Models/
+├── Http/
+│   ├── Controllers/     # Application logic (Products, Cart, Orders)
+│   ├── Middleware/      # Auth & role-based access control
+│
+├── Models/              # Database models (Eloquent ORM)
 
 resources/
- ├── views/
- │    ├── layouts/
- │    ├── products/
- │    ├── cart/
- │    ├── admin/
+├── views/
+│   ├── layouts/         # Main layout templates
+│   ├── products/        # Product pages
+│   ├── cart/            # Cart pages
+│   ├── admin/           # Admin dashboard
+│   ├── auth/            # Authentication pages
 
 routes/
- ├── web.php
+├── web.php              # Main application routes
 
 database/
- ├── migrations/
- ├── seeders/
-
+├── migrations/          # Database schema structure
+├── seeders/             # Seed test data
 ---
 
 ## 🧠 What I Learned
@@ -143,4 +143,4 @@ database/
 ## 👨‍💻 Developer
 
 Ahmed Khaled  
-GitHub: https://github.com/AhmedKhaled858
+[![GitHub](https://img.shields.io/badge/GitHub-AhmedKhaled858-black?style=for-the-badge&logo=github)](https://github.com/AhmedKhaled858)

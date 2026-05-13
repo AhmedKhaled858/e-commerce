@@ -97,28 +97,24 @@ http://127.0.0.1:8000
 ---
 📁 Project Structure
 
-app/
-├── Http/
-│   ├── Controllers/     # Application logic (Products, Cart, Orders)
-│   ├── Middleware/      # Auth & role-based access control
-│
-├── Models/              # Database models (Eloquent ORM)
-
-resources/
-├── views/
-│   ├── layouts/         # Main layout templates
-│   ├── products/        # Product pages
-│   ├── cart/            # Cart pages
-│   ├── admin/           # Admin dashboard
-│   ├── auth/            # Authentication pages
-
-routes/
-├── web.php              # Main application routes
-
-database/
-├── migrations/          # Database schema structure
-├── seeders/             # Seed test data
----
+root/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/       # Application logic (Products, Cart, Orders)
+│   │   └── Middleware/        # Auth & role-based access control
+│   └── Models/                # Database models (Eloquent ORM)
+├── database/
+│   ├── migrations/            # Database schema structure
+│   └── seeders/               # Seed test data
+├── resources/
+│   └── views/
+│       ├── layouts/           # Main layout templates
+│       ├── products/          # Product pages
+│       ├── cart/              # Cart pages
+│       ├── admin/             # Admin dashboard
+│       └── auth/              # Authentication pages
+└── routes/
+    └── web.php                # Main application routes
 
 ## 🧠 What I Learned
 

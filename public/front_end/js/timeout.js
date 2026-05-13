@@ -2,7 +2,7 @@
 function showAlert(message, type = "success") {
 const alert = document.createElement("div");
 
-alert.className = `alert ${type}`;
+alert.className = `custom-alert ${type}`;
 alert.innerText = message;
 
 document.body.appendChild(alert);

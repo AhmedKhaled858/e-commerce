@@ -33,21 +33,25 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed', Rules\Password::min(8)->letters()->mixedCase()->numbers()],
         ]);
+        try {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'user_type' => UserType::User,
+            ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'user_type' => UserType::User,
-        ]);
+            event(new Registered($user));
 
-        event(new Registered($user));
+            Auth::login($user);
 
-        Auth::login($user);
-
-        return redirect(route('index', absolute: false));
+            return redirect(route('index', absolute: false))->with('success', 'Account created successfully 🎉');
+        }
+        catch (ValidationException $e) {
+            return back()->with('error', 'Something went wrong ❌ Please try again.')->withInput();
+        }
     }
 }

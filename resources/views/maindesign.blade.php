@@ -36,6 +36,19 @@
 </head>
 
 <body>  
+   <div class="heading_container heading_center mb-5 position-relative">
+            @if (session('success'))
+                <script>
+                    window.flashSuccess = @json(session('success'));
+                </script>
+            @endif
+
+            @if (session('error'))
+                <script>
+                    window.flashError = @json(session('error'));
+                </script>
+            @endif
+   </div>
   <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
@@ -99,9 +112,9 @@
             <a href="{{ route('product.cart') }}" style="position:relative;">
                 <i class="fa fa-shopping-bag" aria-hidden="true"></i>
 
-                @if($cartCount >= 0)
+              @if(($cartCount ?? 0) > 0)
                     <span class="cart-count">
-                        {{ $cartCount }}
+                        {{ $cartCount??0 }}
                     </span>
                 @endif
             </a>

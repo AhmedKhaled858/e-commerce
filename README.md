@@ -8,36 +8,36 @@ It provides a complete online shopping experience including products, cart, orde
 
 ## ✨ Features
 
-🛍️ Products  
+ Products  
 - Add / Edit / Delete products  
 - Upload product images  
 - Product listing page  
 - Product details page  
 
-🧺 Cart System  
+ Cart System  
 - Add products to cart  
 - Update quantity  
 - Remove items  
 - Session-based cart storage  
 
-📦 Orders  
+ Orders  
 - Create order from cart  
 - Store order in database  
 - View user orders  
 
-👨‍💼 Admin Panel  
+ Admin Panel  
 - Manage products  
 - Manage categories  
 - View all orders  
 
-🔐 Authentication  
+ Authentication  
 - Register / Login / Logout  
 - Middleware protection  
 - Secure password hashing  
 
 ---
 
-## 🧱 Tech Stack
+##  Tech Stack
 
 - Laravel  
 - PHP 8+  
@@ -52,40 +52,44 @@ Email: admin@gmail.com
 Password: 123456789
 
 
-## 🚀 Installation Steps
-
+##  Installation Steps
+```bash
 Clone repository:
 git clone https://github.com/AhmedKhaled858/e-commerce.git
 cd e-commerce
-
+ ```
 ---
 
 Install dependencies:
+```bash
 composer install
 npm install
 npm run dev
-
+ ```
 ---
 
 Setup environment:
+```bash
 cp .env.example .env
 php artisan key:generate
-
+```
 ---
 
 Configure database in .env:
-DB_DATABASE=your_database
-DB_USERNAME=your_username
-DB_PASSWORD=your_password
-
+```
+DB_DATABASE=e-commerce
+DB_USERNAME=root
+DB_PASSWORD=
+```
 ---
 
 Run migrations:
+```bash
 php artisan migrate
 
 (Optional)
 php artisan db:seed
-
+```
 ---
 
 Start project:
@@ -95,32 +99,28 @@ Open in browser:
 http://127.0.0.1:8000
 
 ---
-📁 Project Structure
-
-app/
-├── Http/
-│   ├── Controllers/     # Application logic (Products, Cart, Orders)
-│   ├── Middleware/      # Auth & role-based access control
-│
-├── Models/              # Database models (Eloquent ORM)
-
-resources/
-├── views/
-│   ├── layouts/         # Main layout templates
-│   ├── products/        # Product pages
-│   ├── cart/            # Cart pages
-│   ├── admin/           # Admin dashboard
-│   ├── auth/            # Authentication pages
-
-routes/
-├── web.php              # Main application routes
-
-database/
-├── migrations/          # Database schema structure
-├── seeders/             # Seed test data
----
-
-## 🧠 What I Learned
+## Project Structure
+```
+root/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/       # Application logic (Products, Cart, Orders)
+│   │   └── Middleware/        # Auth & role-based access control
+│   └── Models/                # Database models (Eloquent ORM)
+├── database/
+│   ├── migrations/            # Database schema structure
+│   └── seeders/               # Seed test data
+├── resources/
+│   └── views/
+│       ├── layouts/           # Main layout templates
+│       ├── products/          # Product pages
+│       ├── cart/              # Cart pages
+│       ├── admin/             # Admin dashboard
+│       └── auth/              # Authentication pages
+└── routes/
+    └── web.php                # Main application routes
+```
+##  What I Learned
 
 - Laravel MVC architecture  
 - Eloquent ORM relationships  
@@ -130,7 +130,7 @@ database/
 
 ---
 
-## 📌 Future Improvements
+##  Future Improvements
 
 - Payment gateway integration (Stripe / PayPal)  
 - Product search & filtering  
@@ -140,12 +140,9 @@ database/
 
 ---
 
-<<<<<<< HEAD
-=======
-## 👨‍💻 Developer
+## Author
 
 Ahmed Khaled  
-<<<<<<< HEAD
 [![GitHub](https://img.shields.io/badge/GitHub-AhmedKhaled858-black?style=for-the-badge&logo=github)](https://github.com/AhmedKhaled858)
 
 >>>>>>> b2ef83a7c80c3723f65f06c546aa67e9ae9eba33

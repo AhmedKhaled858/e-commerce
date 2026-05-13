@@ -153,6 +153,8 @@ class AdminController extends Controller
         $order->status = $request->input('status');
         $order->save();
 
-        return redirect()->route('admin.OrderDetails', ['id' => $id])->with('success', 'Order status updated successfully');
+        return redirect()
+            ->route('admin.OrderDetails', ['id' => $id])
+            ->with('success', 'Order status updated successfully');
     }
 }

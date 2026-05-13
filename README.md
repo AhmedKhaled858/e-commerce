@@ -145,6 +145,4 @@ database/
 Ahmed Khaled  
 <<<<<<< HEAD
 [![GitHub](https://img.shields.io/badge/GitHub-AhmedKhaled858-black?style=for-the-badge&logo=github)](https://github.com/AhmedKhaled858)
-=======
-[![GitHub](https://img.shields.io/badge/GitHub-AhmedKhaled858-black?style=for-the-badge&logo=github)](https://github.com/AhmedKhaled858)
->>>>>>> 6d49deaf5206f7757f061f6cde242af84908b355
+

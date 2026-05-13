@@ -140,3 +140,12 @@ database/
 
 ---
 
+<<<<<<< HEAD
+=======
+## 👨‍💻 Developer
+
+Ahmed Khaled  
+<<<<<<< HEAD
+[![GitHub](https://img.shields.io/badge/GitHub-AhmedKhaled858-black?style=for-the-badge&logo=github)](https://github.com/AhmedKhaled858)
+
+>>>>>>> b2ef83a7c80c3723f65f06c546aa67e9ae9eba33

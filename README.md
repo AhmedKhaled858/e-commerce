@@ -143,6 +143,5 @@ database/
 ## 👨‍💻 Developer
 
 Ahmed Khaled  
-<<<<<<< HEAD
 [![GitHub](https://img.shields.io/badge/GitHub-AhmedKhaled858-black?style=for-the-badge&logo=github)](https://github.com/AhmedKhaled858)
 

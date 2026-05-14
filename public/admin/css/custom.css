@@ -1,3 +1,120 @@
+.custom-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 99999;
+    min-width: 220px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* SUCCESS */
+.custom-alert.success {
+    background: #22c55e;
+}
+
+/* ERROR */
+.custom-alert.error {
+    background: #ef4444;
+}
+/* ===== REVIEW TABLE MODERN STYLE ===== */
+
+    .review-card {
+        background: #111827;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .review-table {
+        color: #e5e7eb;
+    }
+
+    .review-table thead {
+        background: #0f172a;
+    }
+
+    .review-table tbody tr {
+        transition: 0.2s ease;
+    }
+
+    .review-table tbody tr:hover {
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Product Image */
+    .product-image {
+        width: 55px;
+        height: 55px;
+        object-fit: cover;
+        border-radius: 12px;
+        border: 1px solid #374151;
+    }
+
+    /* Review Text */
+    .review-box {
+        color: #d1d5db;
+        line-height: 1.6;
+    }
+
+    /* Status badges */
+    .status-badge {
+        padding: 5px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .status-pending {
+        background: rgba(245, 158, 11, 0.15);
+        color: #fbbf24;
+    }
+
+    .status-approved {
+        background: rgba(34, 197, 94, 0.15);
+        color: #4ade80;
+    }
+
+    .status-rejected {
+        background: rgba(239, 68, 68, 0.15);
+        color: #f87171;
+    }
+
+    /* Buttons */
+    .btn-icon {
+        border-radius: 10px;
+        transition: 0.2s;
+    }
+
+    .btn-icon:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Select */
+    .status-select {
+        background: #1f2937;
+        color: #fff;
+        border: 1px solid #374151;
+        border-radius: 8px;
+    }
+
+    .review-count-box {
+        background: #1f2937;
+        padding: 10px 18px;
+        border-radius: 14px;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .review-count-box i {
+        color: #818cf8;
+        margin-right: 8px;
+    }
 /* your styles go here */
 .checkout-btn {
 display: inline-block;

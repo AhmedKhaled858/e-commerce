@@ -127,7 +127,7 @@
 
                 <h3 class="mb-4">Customer Reviews</h3>
 
-                @forelse($product->reviews as $review)
+                @forelse($reviews as $review)
                     <div class="card mb-3 shadow-sm">
 
                         <div class="card-body">

@@ -10,7 +10,10 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductCart;
 use App\Enums\UserType;
+use App\Enums\ReviewStatus;
+
 use App\Models\Order;
+use App\Models\Review;
 use App\Models\User;
 
 class UserController extends Controller
@@ -51,6 +54,7 @@ class UserController extends Controller
             $cartCount = ProductCart::where('user_id', Auth::id())->sum('quantity');
         }
         $products = Product::all();
+        
         return view('all-product', compact('products', 'cartCount'));
     }
     // product details function
@@ -61,7 +65,10 @@ class UserController extends Controller
             $cartCount = ProductCart::where('user_id', Auth::id())->sum('quantity');
         }
         $product = Product::findOrFail($id);
-        return view('productdetails', compact('product', 'cartCount'));
+        $reviews = $product->reviews()
+        ->where('status',ReviewStatus::Approved)
+        ->get();
+        return view('productdetails', compact('product', 'cartCount','reviews'));
     }
     // add to cart function
     public function addToCart(Request $request)

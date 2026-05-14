@@ -1,6 +1,28 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 @import url("font-awesome.min.css");
+.custom-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 99999;
+    min-width: 220px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
 
+/* SUCCESS */
+.custom-alert.success {
+    background: #22c55e;
+}
+
+/* ERROR */
+.custom-alert.error {
+    background: #ef4444;
+}
 /* Search container */
 .search-box {
     display: flex;

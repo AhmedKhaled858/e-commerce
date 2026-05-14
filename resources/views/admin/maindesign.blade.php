@@ -24,6 +24,7 @@
     <link rel="shortcut icon" href="{{ asset('admin/img/favicon.ico') }}">
 
 
+
 </head>
 
 <body>
@@ -42,7 +43,7 @@
             </div>
             <div class="container-fluid d-flex align-items-center justify-content-between">
                 <div class="navbar-header">
-                    <!-- Navbar Header--><a href="index.html" class="navbar-brand">
+                    <!-- Navbar Header--><a href="{{route('index')}}" class="navbar-brand">
                         <div class="brand-text brand-big visible text-uppercase"><strong
                                 class="text-primary">Dark</strong><strong>Admin</strong></div>
                         <div class="brand-text brand-sm"><strong class="text-primary">D</strong><strong>A</strong></div>
@@ -148,6 +149,7 @@
                     <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
                         <li><a href="{{ route('admin.addProduct') }}">Add Product</a></li>
                         <li><a href="{{ route('admin.ViewProducts') }}">View Products</a></li>
+                        <li><a href="{{ route('admin.review') }}">View Reviews</a></li>
                         <li><a href="{{ route('admin.ViewOrders') }}">View Orders</a></li>
                     </ul>
                 </li>
@@ -168,17 +170,7 @@
                 </div>
             </div>
             <section class="no-padding-top no-padding-bottom">
-                @if (session('success'))
-                    <div class="alert success">
-                        <i class="fa fa-check-circle"></i>
-                        {{ session('success') }}
-                    </div>
-                @elseif(session('error'))
-                    <div class="alert error">
-                        <i class="fa fa-times-circle"></i>
-                        {{ session('error') }}
-                    </div>
-                @endif
+                @include('partials.flash_messages')
                 @yield('dashboard')
                 @yield('analysis')
                 @yield('listcategory')
@@ -188,6 +180,7 @@
                 @yield('searchresults')
                 @yield('view_orders')
                 @yield('order_details')
+                @yield('review')
             </section>
 
             <section>

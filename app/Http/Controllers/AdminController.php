@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\Order;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -156,5 +157,35 @@ class AdminController extends Controller
         return redirect()
             ->route('admin.OrderDetails', ['id' => $id])
             ->with('success', 'Order status updated successfully');
+    }
+    public function productsreview()
+    {
+        $reviews = Review::with(['user', 'product'])
+            ->latest()
+            ->paginate(5);
+        return view('admin.products_review', compact('reviews'));
+    }
+    public function updateReviewStatus(Request $request, $id)
+    {
+        $review = Review::findOrFail($id);
+
+        $request->validate([
+            'status' => 'required|in:pending,approved,rejected',
+        ]);
+
+        $review->status = $request->status;
+
+        $review->save();
+
+        return back()->with('success', 'Review status updated successfully');
+    }
+
+    public function deleteReview($id)
+    {
+        $review = Review::findOrFail($id);
+
+        $review->delete();
+
+        return back()->with('success', 'Review deleted successfully');
     }
 }

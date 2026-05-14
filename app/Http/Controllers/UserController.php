@@ -40,7 +40,7 @@ class UserController extends Controller
         // contact us function
         public function contactUs()
         {
-            return view('contact');
+            return view('contact_us');
         }
      
     // all products function

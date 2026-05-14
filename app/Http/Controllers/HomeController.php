@@ -24,5 +24,8 @@ class HomeController extends Controller
 
     return view('admin.search_results', compact('products', 'categories', 'keyword'));
     }
+    public function whyUs(){
+        return view('why');
+    }
    
 }

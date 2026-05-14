@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::get('/why_US',[HomeController::class,'whyUs'])->name('why');
+Route::get('/shop',[HomeController::class,'shop'])->name('shop.index');
+Route::get('/testimonial',[HomeController::class,'testimonial'])->name('testimonial');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

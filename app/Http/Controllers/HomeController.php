@@ -27,5 +27,12 @@ class HomeController extends Controller
     public function whyUs(){
         return view('why');
     }
+    public function shop(){
+         $products = Product::latest()->paginate(12);
+        return view ('shop',compact('products'));
+    }
+    public function testimonial(){
+        return view('testimonial');
+    }
    
 }

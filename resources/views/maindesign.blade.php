@@ -39,7 +39,7 @@
 <body>
     
    @include('partials.flash_messages')
-   @include('partials.header')
+   @include('partials.header-home')
    @yield('content')
    <br></br> <br></br>
    @include('partials.footer')

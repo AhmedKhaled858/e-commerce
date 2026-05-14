@@ -1,6 +1,46 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 @import url("font-awesome.min.css");
 
+/* Search container */
+.search-box {
+    display: flex;
+    align-items: center;
+    background: #f5f5f5;
+    border-radius: 25px;
+    padding: 5px 10px;
+    transition: 0.3s;
+}
+
+/* hover effect */
+.search-box:focus-within {
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* input */
+.search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 6px 10px;
+    width: 160px;
+    font-size: 14px;
+}
+
+/* button */
+.search-btn {
+    border: none;
+    background: transparent;
+    color: #333;
+    cursor: pointer;
+    padding: 6px;
+    transition: 0.2s;
+}
+
+.search-btn:hover {
+    color: #000;
+    transform: scale(1.1);
+}
 /* Default nav link style */
 .navbar-nav .nav-link {
     color: #333;

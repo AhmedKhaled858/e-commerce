@@ -83,11 +83,19 @@
                     </a>
 
                     {{-- SEARCH --}}
-                    <form class="form-inline">
-                        <a href="{{ route('search') }}"></a>
-                        <button class="btn nav_search-btn" type="submit">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </button>
+                    <form class="form-inline search-form" action="{{ route('search') }}" method="GET">
+
+                        <div class="search-box">
+
+                            <input type="search" name="search" placeholder="Search products..." class="search-input"
+                                required>
+
+                            <button class="search-btn" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+
+                        </div>
+
                     </form>
 
                 </div>

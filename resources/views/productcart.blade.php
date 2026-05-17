@@ -7,7 +7,7 @@
         <div class="container">
 
             {{-- ALERTS --}}
-            @if (session('success'))
+            {{-- @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
@@ -15,7 +15,7 @@
                 <div class="alert alert-danger">
                     {{ session('error') }}
                 </div>
-            @endif
+            @endif --}}
 
             {{-- TITLE --}}
             <div class="heading_container heading_center mb-5 cart-title">
@@ -94,7 +94,12 @@
                 </div>
 
                 <div class="text-end mt-4">
-                    <h4>Total: <span class="text-success">${{ $grandTotal }}</span></h4>
+                    <h4>
+                        Total:
+                        <span class="text-success" id="grand-total">
+                            ${{ $grandTotal }}
+                        </span>
+                    </h4>
                 </div>
 
                 <div class="d-flex justify-content-between mt-4">
@@ -120,5 +125,49 @@
         </div>
 
     </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script>
+        $(document).ready(function() {
+
+            $('.update-quantity').click(function(e) {
+                e.preventDefault();
+
+                let button = $(this);
+                let cartId = button.data('id');
+                let action = button.data('action');
+
+                $.ajax({
+                    url: "{{ route('cart.update', ':id') }}".replace(':id', cartId),
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        action: action
+                    },
+
+                    success: function(response) {
+
+                        // update quantity input
+                        $('#quantity-' + cartId).val(response.quantity);
+
+                        // update item total
+                        $('#item-total-' + cartId).text('$' + response.itemTotal);
+
+                        // update grand total
+                        $('#grand-total').text('$' + response.grandTotal);
+                    },
+
+                    error: function(xhr) {
+
+                        if (xhr.responseJSON.error) {
+                            alert(xhr.responseJSON.error);
+                        } else {
+                            alert('Something went wrong');
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
 @endsection

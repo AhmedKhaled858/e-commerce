@@ -61,15 +61,20 @@ class CheckoutController extends Controller
                 'status' => 'pending',
             ]);
             foreach ($cartItems as $item) {
+                if ($item->quantity > $item->product->quantity) {
+                    throw new \Exception($item->product->title . ' exceeds available stock.');
+                }
+
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $item->product_id,
                     'quantity' => $item->quantity,
                     'price' => $item->product->price,
                 ]);
-
+                $item->product->decrement('quantity', $item->quantity);
                 $item->delete();
             }
+
             DB::commit();
             return redirect()->route('product.cart')->with('success', 'Order placed successfully!');
         } catch (\Exception $e) {

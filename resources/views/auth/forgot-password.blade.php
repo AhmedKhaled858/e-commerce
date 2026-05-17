@@ -1,25 +1,76 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password - Giftos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ asset('front_end/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('front_end/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('front_end/css/login.css') }}">
+</head>
+
+<body>
+
+<div class="login-wrapper">
+      @include('partials.flash_messages')
+    <div class="login-image">
+        <img src="{{ asset('front_end/images/login2.png') }}" alt="forgot password">
+
+        <div class="image-text">
+            <h2>Forgot Password? 🔐</h2>
+            <p>We’ll send you a reset link to your email</p>
+        </div>
     </div>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <div class="login-form">
 
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
+        <h2>Reset Password</h2>
+        <p>Enter your email to receive a reset link</p>
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <form method="POST" action="{{ route('password.email') }}">
+            @csrf
+
+            <!-- EMAIL -->
+            <div class="mb-3">
+                <div class="input-box">
+                    <i class="fa fa-envelope"></i>
+                    <input type="email"
+                           name="email"
+                           placeholder="Enter your email"
+                           value="{{ old('email') }}"
+                           required
+                           autofocus
+                           class="@error('email') is-invalid @enderror">
+                </div>
+
+                @error('email')
+                    <small class="text-danger d-block mt-1">
+                        {{ $message }}
+                    </small>
+                @enderror
+            </div>
+
+            <!-- BUTTON -->
+            <button class="btn-login" type="submit">
+                Send Reset Link
+            </button>
+
+        </form>
+
+        <!-- BACK TO LOGIN -->
+        <div class="small-text mt-3">
+            Remember your password?
+            <a href="{{ route('login') }}">Login</a>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </div>
+
+</div>
+
+</body>
+</html>

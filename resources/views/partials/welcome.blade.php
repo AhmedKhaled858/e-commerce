@@ -11,10 +11,9 @@
                                     Gift Shop
                                 </h1>
                                 <p>
-                                    Sequi perspiciatis nulla reiciendis, rem, tenetur impedit, eveniet non
-                                    necessitatibus error distinctio mollitia suscipit. Nostrum fugit doloribus
-                                    consequatur distinctio esse, possimus maiores aliquid repellat beatae cum,
-                                    perspiciatis enim, accusantium perferendis.
+                                    Make every moment special with the perfect gift.
+                                    Browse our unique collection and enjoy secure shopping,
+                                    great prices, and reliable service for every occasion.
                                 </p>
                                 <a href="">
                                     Contact Us

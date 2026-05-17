@@ -1,27 +1,71 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Password - Giftos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ asset('front_end/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('front_end/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('front_end/css/login.css') }}">
+</head>
+
+<body>
+
+<div class="login-wrapper">
+      @include('partials.flash_messages')
+    <div class="login-image">
+        <img src="{{ asset('front_end/images/login2.png') }}" alt="confirm password">
+
+        <div class="image-text">
+            <h2>Secure Area 🔒</h2>
+            <p>Please confirm your password to continue</p>
+        </div>
     </div>
 
-    <form method="POST" action="{{ route('password.confirm') }}">
-        @csrf
+    <div class="login-form">
 
-        <!-- Password -->
-        <div>
-            <x-input-label for="password" :value="__('Password')" />
+        <h2>Confirm Password</h2>
+        <p>This step protects your account security</p>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="mb-3" style="font-size: 14px; color: #666;">
+            This is a secure area of the application. Please confirm your password before continuing.
         </div>
 
-        <div class="flex justify-end mt-4">
-            <x-primary-button>
-                {{ __('Confirm') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+        <form method="POST" action="{{ route('password.confirm') }}">
+            @csrf
+            <div class="mb-3">
+                <div class="input-box">
+                    <i class="fa fa-lock"></i>
+                    <input type="password"
+                           name="password"
+                           placeholder="Enter your password"
+                           required
+                           autocomplete="current-password"
+                           class="@error('password') is-invalid @enderror">
+                </div>
+
+                @error('password')
+                    <small class="text-danger d-block mt-1">
+                        {{ $message }}
+                    </small>
+                @enderror
+            </div>
+
+            <!-- BUTTON -->
+            <button class="btn-login" type="submit">
+                Confirm Password
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -25,8 +25,8 @@ alert.style.transform = "translateY(-10px)";
 
 setTimeout(() => {
 alert.remove();
-}, 400);
-}, 3000);
+}, 600);
+}, 6000);
 }
 
 
@@ -39,6 +39,9 @@ showAlert(window.flashSuccess, "success");
 if (window.flashError) {
 showAlert(window.flashError, "error");
 }
+ if (window.flashStatus) {
+        showAlert(window.flashStatus, "status");
+    }
 });
 
 // Loading screen

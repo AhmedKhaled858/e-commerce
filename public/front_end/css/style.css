@@ -14,6 +14,9 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
+.custom-alert.status {
+    background: #22c55e;
+}
 /* SUCCESS */
 .custom-alert.success {
     background: #22c55e;

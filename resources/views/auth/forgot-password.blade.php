@@ -15,9 +15,9 @@
 </head>
 
 <body>
-
+ 
 <div class="login-wrapper">
-      @include('partials.flash_messages')
+     @include('partials.flash_messages')
     <div class="login-image">
         <img src="{{ asset('front_end/images/login2.png') }}" alt="forgot password">
 
@@ -71,6 +71,6 @@
     </div>
 
 </div>
-
+<script src="{{ asset('front_end/js/timeout.js') }}"></script>
 </body>
 </html>

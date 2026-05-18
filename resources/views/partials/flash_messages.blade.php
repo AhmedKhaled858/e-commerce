@@ -10,4 +10,9 @@
               window.flashError = @json(session('error'));
           </script>
       @endif
+       @if (session('status'))
+        <script>
+            window.flashStatus = @json(session('status'));
+        </script>
+    @endif
   </div>

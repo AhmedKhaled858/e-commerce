@@ -1,31 +1,83 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Email - Giftos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ asset('front_end/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('front_end/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('front_end/css/login.css') }}">
+</head>
+
+<body>
+
+<div class="login-wrapper">
+
+    <!-- IMAGE SIDE -->
+    <div class="login-image">
+        <img src="{{ asset('front_end/images/login2.png') }}" alt="verify email">
+
+        <div class="image-text">
+            <h2>Verify Your Email 📩</h2>
+            <p>Activate your account and start shopping</p>
+        </div>
     </div>
 
-    @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-            {{ __('A new verification link has been sent to the email address you provided during registration.') }}
-        </div>
-    @endif
+    <!-- FORM SIDE -->
+    <div class="login-form">
 
-    <div class="mt-4 flex items-center justify-between">
+        <h2>Email Verification</h2>
+        <p>Complete your account setup</p>
+
+        <!-- INFO MESSAGE -->
+        <div class="mb-3" style="font-size:14px; color:#666; line-height:1.6;">
+            Thanks for signing up! Before getting started, please verify your
+            email address by clicking the link we just emailed to you.
+            If you didn't receive the email, we’ll gladly send another.
+        </div>
+
+        <!-- SUCCESS MESSAGE -->
+        @if (session('status') == 'verification-link-sent')
+            <div class="alert alert-success mb-3">
+                A new verification link has been sent to your email address.
+            </div>
+        @endif
+
+        <!-- RESEND EMAIL -->
         <form method="POST" action="{{ route('verification.send') }}">
             @csrf
 
-            <div>
-                <x-primary-button>
-                    {{ __('Resend Verification Email') }}
-                </x-primary-button>
-            </div>
+            <button class="btn-login w-100 mb-3" type="submit">
+                <i class="fa fa-paper-plane"></i>
+                Resend Verification Email
+            </button>
         </form>
 
+        <!-- LOGOUT -->
         <form method="POST" action="{{ route('logout') }}">
             @csrf
 
-            <button type="submit" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                {{ __('Log Out') }}
+            <button type="submit"
+                style="
+                    background:none;
+                    border:none;
+                    color:#666;
+                    font-size:14px;
+                    text-decoration:underline;
+                    cursor:pointer;
+                ">
+                Log Out
             </button>
         </form>
+
     </div>
-</x-guest-layout>
+
+</div>
+
+</body>
+</html>

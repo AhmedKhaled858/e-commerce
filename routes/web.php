@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
 });
 // i want to make a route group for admin and only admin can access those routes convert it to string and compare it with user type in the middleware
 
-Route::middleware('admin')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     // Route::get('/test',[AdminController::class,'test']);
     Route::get('/createCategory', [AdminController::class, 'createCategory'])->name('admin.createCategory');
     Route::post('/storeCategory', [AdminController::class, 'storeCategory'])->name('admin.storeCategory');

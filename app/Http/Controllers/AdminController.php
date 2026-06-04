@@ -12,13 +12,14 @@ use App\Models\Review;
 use App\Models\Order;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
     //
     //! start functions for category
     public function createCategory()
-    {
+    {   
         return view('admin.createcategory');
     }
     public function storeCategory(Request $request)

@@ -15,6 +15,7 @@ use App\Enums\ReviewStatus;
 use App\Models\Order;
 use App\Models\Review;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -24,21 +25,24 @@ class UserController extends Controller
     // user dashboard function
     public function index()
     {
-        $user = Auth::user();
+        if(Gate::allows('admin')){
         $users_count=User::count();
         $new_order_count=Order::where('status',OrderStatus::PENDING)->count();
         $orders_count=Order::count();
-        $orders=Order::where('user_id',Auth::id())->with('items.product')->get();
-
-
-      
-        if ($user->user_type == UserType::Admin) {
             return view('admin.dashboard',compact('users_count','new_order_count','orders_count'));
         }
-        if ($user->user_type == UserType::User) {
-            //   dd($orders->toArray());
+        else{
+            $orders=Order::where('user_id',Auth::id())->with('items.product')->get();
             return view('dashboard',compact('orders'));
+
         }
+        // if ($user->user_type == UserType::Admin) {
+        //     return view('admin.dashboard',compact('users_count','new_order_count','orders_count'));
+        // }
+        // if ($user->user_type == UserType::User) {
+        //     //   dd($orders->toArray());
+        //     return view('dashboard',compact('orders'));
+        // }
     }
         // contact us function
         public function contactUs()

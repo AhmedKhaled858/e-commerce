@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Order;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -19,14 +20,22 @@ class AdminController extends Controller
     //
     //! start functions for category
     public function createCategory()
-    {   
-        return view('admin.createcategory');
+    {
+        $categories = Category::all();
+        return view('admin.createcategory', compact('categories'));
     }
     public function storeCategory(Request $request)
     {
-        $category = new Category();
-        $category->name = $request->category_name;
-        $category->save();
+        $data = [
+            'name' => $request->category_name,
+            'parent_id' => $request->parent_id,
+            'slug' => Str::slug($request->category_name),
+            'description' => $request->category_description,
+        ];
+        if ($request->hasFile('category_image')) {
+            $data['image'] = $request->file('category_image')->store('categories', 'public');
+        }
+        Category::create($data);
         return redirect()->route('admin.createCategory')->with('success', 'Category created successfully');
     }
     public function listCategories()
@@ -48,7 +57,14 @@ class AdminController extends Controller
         $category = Category::find($id);
         $category->update([
             'name' => $request->input('category_name'),
+            'parent_id' => $request->input('parent_id'),
+            'slug' => Str::slug($request->input('category_name')),
+            'description' => $request->input('category_description'),
+            'status' => $request->input('flexRadioDefault'),
         ]);
+        if ($request->hasFile('category_image')) {
+            $category->image = $request->file('category_image')->store('categories', 'public');
+        }
         $category->save();
         return redirect()->route('admin.listCategories')->with('success', 'Category updated successfully');
     }

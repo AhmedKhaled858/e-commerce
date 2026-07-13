@@ -13,7 +13,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use App\Enums\UserType;
-
+use App\Http\Requests\Auth\RegisterRequest;
 class RegisteredUserController extends Controller
 {
     /**
@@ -29,26 +29,22 @@ class RegisteredUserController extends Controller
      *
      * @throws ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(RegisterRequest $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', Rules\Password::min(8)->letters()->mixedCase()->numbers()],
-        ]);
+     
         try {
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'user_type' => UserType::User,
+                'user_type' => UserType::User->value,
             ]);
 
             event(new Registered($user));
 
             Auth::login($user);
 
-            return redirect(route('index', absolute: false))->with('success', 'Account created successfully 🎉');
+            return redirect(route('index', absolute: false))->with('success', 'Account created successfully');
         }
         catch (ValidationException $e) {
             return back()->with('error', 'Something went wrong ❌ Please try again.')->withInput();

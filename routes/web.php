@@ -9,6 +9,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
 use App\Enums\UserType;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\Auth\GoogleController;
 
 Route::get('/', [UserController::class, 'show'])->name('index');
 Route::get('/product_details/{id}', [UserController::class, 'productDetails'])->name('product_details');
@@ -18,19 +19,18 @@ Route::get('/dashboard', [UserController::class, 'index'])
     ->name('dashboard');
 Route::get('/contact_us', [UserController::class, 'contactUs'])->name('contact_us');
 
-Route::get('/product/cart', [UserController::class, 'productCart'])
-    ->middleware(['auth', 'verified'])
-    ->name('product.cart');
-Route::get('/product/cart/remove/{id}', [UserController::class, 'removeFromCart'])->name('cart.remove');
-Route::post('/cart/add', [UserController::class, 'addToCart'])->name('cart.add');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/product/cart', [UserController::class, 'productCart'])->name('product.cart');
+    Route::get('/product/cart/remove/{id}', [UserController::class, 'removeFromCart'])->name('cart.remove');
+    Route::post('/cart/add', [UserController::class, 'addToCart'])->name('cart.add');
+    Route::post('/cart/update/{id}', [UserController::class, 'updateQuantity'])->name('cart.update');
+});
+
+
 Route::get('/checkout', [CheckoutController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('checkout.index');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
-Route::middleware('auth')->group(function () {
-    Route::post('/cart/update/{id}', [UserController::class, 'updateQuantity'])->name('cart.update');
-});
-
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::get('/why_US', [HomeController::class, 'whyUs'])->name('why');
 Route::get('/shop', [HomeController::class, 'shop'])->name('shop.index');
@@ -66,4 +66,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
 //! route for storing reviews
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::get('/auth/google', [GoogleController::class, 'redirect'])
+    ->name('google.login');
+
+Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
 require __DIR__ . '/auth.php';

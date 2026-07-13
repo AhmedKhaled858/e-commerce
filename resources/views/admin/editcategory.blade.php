@@ -10,14 +10,44 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('admin.editCategory', $category->id) }}" method="POST">
+            <form action="{{ route('admin.editCategory', $category->id) }}" method="POST"
+                enctype="multipart/form-data">
                 {{-- {{ method_field('patch') }} --}}
-                {{ csrf_field() }}
+                {{-- {{ csrf_field() }} --}}
                 @csrf
                 <div class="modal-body">
                     <label for="exampleInputPassword1">Category Name</label>
                     <input type="hidden" name="id" value="{{ $category->id }}">
                     <input type="text" name="category_name" value="{{ $category->name }}" class="form-control">
+                    <label for="exampleInputPassword1">Parent Category</label>
+                    <select name="parent_id" class="form-control">
+                        <option value="">None</option>
+                        @foreach ($categories as $parentCategory)
+                            <option value="{{ $parentCategory->id }}"
+                                {{ $category->parent_id == $parentCategory->id ? 'selected' : '' }}>
+                                {{ $parentCategory->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <label for="exampleInputPassword1">Category Description</label>
+                    <textarea name="category_description" class="form-control">{{ $category->description }}</textarea>
+                    <label for="exampleInputPassword1">Category Image</label>
+                    <input type="file" name="category_image" class="form-control">
+                    <label for="exampleInputPassword1"> Category Status</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" value='active' id="flexRadioDefault1"
+                            {{ $category->status === 'active' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                           Active
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input  class="form-check-input" type="radio" value="archived" name="flexRadioDefault" id="flexRadioDefault2"
+                            {{ $category->status === 'archived' ? 'checked' : '' }}>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Archived
+                        </label>
+                    </div>
 
                 </div>
 

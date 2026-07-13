@@ -28,7 +28,6 @@
 <body class="p-6 md:p-12">
 
  <div class="max-w-5xl mx-auto">
-        <!-- Navigation Row -->
         <div class="flex justify-between items-center mb-8">
             <a href="/" class="glass-card px-4 py-2 text-sm font-medium text-gray-700 hover:bg-white/50 transition-all flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -37,10 +36,36 @@
                 Back to Home
             </a>
         </div>
-    
+      <div class="glass-card p-5 mb-8 flex items-center justify-between">
+
+    <div class="flex items-center gap-4">
+
+        @if($user->avatar)
+            <img
+                src="{{ $user->avatar }}"
+                alt="{{ $user->name }}"
+                class="w-16 h-16 rounded-full object-cover border-2 border-white shadow-lg">
+        @else
+            <div class="w-16 h-16 rounded-full bg-rose-500 text-white flex items-center justify-center text-2xl font-bold shadow-lg">
+                {{ strtoupper(substr($user->name, 0, 1)) }}
+            </div>
+        @endif
+
+        <div>
+            <h2 class="text-xl font-bold text-gray-800">
+                {{ $user->name }}
+            </h2>
+
+            <p class="text-gray-500 text-sm">
+                {{ $user->email }}
+            </p>
+        </div>
+
+    </div>
+
+</div>
     @foreach ($orders as $order) 
         <div class="mb-20"> 
-            <!-- Header -->
             <h1 class="text-3xl font-bold text-gray-900 mb-8">Order <span class="text-gray-500 font-medium">#{{ $order->order_number }}</span></h1>
 
             <div class="glass-card p-6 mb-8">

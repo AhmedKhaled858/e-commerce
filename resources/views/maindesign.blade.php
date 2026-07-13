@@ -14,7 +14,7 @@
     <link rel="shortcut icon" href="{{ asset('front_end/images/favicon.png') }}" type="image/x-icon">
 
     <title>
-        Giftos
+       {{config('app.name')}}
     </title>
 
     <!-- slider stylesheet -->

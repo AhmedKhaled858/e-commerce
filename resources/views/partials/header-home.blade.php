@@ -45,21 +45,34 @@
                 <div class="user_option">
 
                     @if (Auth::check())
+                        
                         <a href="{{ route('dashboard') }}">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            <span>Dashboard</span>
+                           
+                            @if(Auth::user()->user_type === \App\Enums\UserType::Admin)
+                             <i class="fa fa-user" aria-hidden="true"></i>
+                                <span>Admin Dashboard</span>
+                            @else
+                             <i class="fa fa-history" aria-hidden="true"></i>
+                            
+                                <span>Order History</span>
+                            @endif
                         </a>
 
-                        <a href="{{ route('logout') }}"
+                        {{-- <a href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 
                             <i class="fa fa-sign-out" aria-hidden="true"></i>
                             <span>Logout</span>
 
-                        </a>
+                        </a> --}}
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
                             @csrf
+                            <button type="submit" class="btn btn-link"
+                                style="padding: 15px; border: none; background: none; color: black;">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                <span>Logout</span>
+                            </button>
                         </form>
                     @else
                         <a href="{{ route('login') }}">

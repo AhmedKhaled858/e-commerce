@@ -32,8 +32,9 @@ class UserController extends Controller
             return view('admin.dashboard',compact('users_count','new_order_count','orders_count'));
         }
         else{
+            $user=Auth::user();
             $orders=Order::where('user_id',Auth::id())->with('items.product')->get();
-            return view('dashboard',compact('orders'));
+            return view('dashboard',compact('orders','user'));
 
         }
         // if ($user->user_type == UserType::Admin) {

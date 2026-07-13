@@ -1,8 +1,6 @@
 @extends('maindesign')
 
 @section('content')
-
-
     <div class="container py-5">
         <form action="{{ route('checkout.store') }}" method="POST">
             @csrf
@@ -44,7 +42,16 @@
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" id="save_address" name="save_address"
+                            value="1">
 
+                        <label class="form-check-label" for="save_address">
+                            Save this address for future orders
+                        </label>
+                    </div>
+                    <br>
                     <!-- Step 3: Payment -->
                     <div class="checkout-step">
                         <div class="step-icon">3</div>

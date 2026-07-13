@@ -25,7 +25,7 @@
 
                 @if ($products->isEmpty())
                     <tr>
-                        <td class="text-center align-middle" colspan="3">No products found.</td>
+                        <td class="text-center align-middle" colspan="8">No products found.</td>
                     </tr>
                 @else
                     @foreach ($products as $product)

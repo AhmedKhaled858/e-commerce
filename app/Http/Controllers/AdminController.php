@@ -54,19 +54,25 @@ class AdminController extends Controller
     }
     public function editCategory(Request $request, $id)
     {
-        $category = Category::find($id);
-        $category->update([
-            'name' => $request->input('category_name'),
-            'parent_id' => $request->input('parent_id'),
-            'slug' => Str::slug($request->input('category_name')),
-            'description' => $request->input('category_description'),
-            'status' => $request->input('flexRadioDefault'),
-        ]);
-        if ($request->hasFile('category_image')) {
-            $category->image = $request->file('category_image')->store('categories', 'public');
+        try {
+            $category = Category::findorFail($id);
+            $category->update([
+                'name' => $request->input('category_name'),
+                'parent_id' => $request->input('parent_id'),
+                'slug' => Str::slug($request->input('category_name')),
+                'description' => $request->input('category_description'),
+                'status' => $request->input('status'),
+            ]);
+            if ($request->hasFile('category_image')) {
+                $category->image = $request->file('category_image')->store('categories', 'public');
+            }
+            // $category->save();
+            return redirect()->route('admin.listCategories')->with('success', 'Category updated successfully');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.listCategories')
+                ->with('error', 'An error occurred while updating the category: ' . $e->getMessage());
         }
-        $category->save();
-        return redirect()->route('admin.listCategories')->with('success', 'Category updated successfully');
     }
     //?end functions for category
 

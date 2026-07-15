@@ -30,9 +30,9 @@
                     <td>
 
                         <div style="display: flex; justify-content: center; gap: 10px;">
-                             <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
-                                                data-toggle="modal" href="#edit{{ $category->id }}"><i
-                                                    class="las la-pen"></i>Edit</a>
+                             <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale" data-toggle="modal" href="#edit{{ $category->id }}">
+                                <i class="las la-pen"></i>Edit</a>
+
                         <form action="{{ route('admin.deleteCategory', $category->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
@@ -46,7 +46,7 @@
                     @include('admin.editcategory')
                 @empty
                     <tr>
-                        <td class="text-center" colspan="5">No categories found.</td>
+                        <td class="text-center" colspan="6">No categories found.</td>
                     </tr>
                 @endforelse
         </tbody>

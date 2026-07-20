@@ -43,7 +43,7 @@
             </div>
             <div class="container-fluid d-flex align-items-center justify-content-between">
                 <div class="navbar-header">
-                    <!-- Navbar Header--><a href="{{route('index')}}" class="navbar-brand">
+                    <!-- Navbar Header--><a href="{{route('dashboard')}}" class="navbar-brand">
                         <div class="brand-text brand-big visible text-uppercase"><strong
                                 class="text-primary">Dark</strong><strong>Admin</strong></div>
                         <div class="brand-text brand-sm"><strong class="text-primary">D</strong><strong>A</strong></div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
+use  App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -22,10 +23,11 @@ class AdminController extends Controller
     public function createCategory()
     {
         $categories = Category::all();
-        return view('admin.createcategory', compact('categories'));
+        $category=new category();
+        return view('admin.createcategory', compact('categories', 'category'));
     }
-    public function storeCategory(Request $request)
-    {
+    public function storeCategory(StoreCategoryRequest $request)
+    {  
         $data = [
             'name' => $request->category_name,
             'parent_id' => $request->parent_id,
@@ -45,12 +47,18 @@ class AdminController extends Controller
     }
     public function deleteCategory($id)
     {
-        $category = Category::find($id);
-        if ($category) {
-            $category->delete();
-            return redirect()->route('admin.listCategories')->with('success', 'Category deleted successfully');
+        try{
+             $category = Category::find($id);
+        if ($category->image) {
+           Storage::disk('public')->delete($category->image);
         }
-        return redirect()->route('admin.listCategories')->with('error', 'Category not found');
+        $category->delete();
+        return redirect()->route('admin.listCategories')->with('success', 'Category deleted successfully');
+        }
+        catch (\Exception $e) {
+            return redirect()->route('admin.listCategories')->with('error', 'An error occurred while deleting the category: ' . $e->getMessage());
+        }
+       
     }
     public function editCategory(Request $request, $id)
     {
@@ -64,9 +72,14 @@ class AdminController extends Controller
                 'status' => $request->input('status'),
             ]);
             if ($request->hasFile('category_image')) {
+                // Delete the old image if it exists
+                if (isset($category->image)) {
+                    Storage::disk('public')->delete($category->image);
+                }
+                // Store the new image
                 $category->image = $request->file('category_image')->store('categories', 'public');
             }
-            // $category->save();
+            $category->save();
             return redirect()->route('admin.listCategories')->with('success', 'Category updated successfully');
         } catch (\Exception $e) {
             return redirect()

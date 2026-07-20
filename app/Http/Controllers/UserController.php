@@ -26,7 +26,7 @@ class UserController extends Controller
     public function index()
     {
         if(Gate::allows('admin')){
-        $users_count=User::count();
+        $users_count=User::where('user_type',UserType::User)->count();
         $new_order_count=Order::where('status',OrderStatus::PENDING)->count();
         $orders_count=Order::count();
             return view('admin.dashboard',compact('users_count','new_order_count','orders_count'));

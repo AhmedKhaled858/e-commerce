@@ -1,5 +1,5 @@
 @extends('admin.maindesign')
-@section('listcategory')
+@section('viewproducts')
 
     <div id="loadingScreen">
         <div class="spinner"></div>
@@ -30,13 +30,13 @@
                 @else
                     @foreach ($products as $product)
                         <tr>
-                            <td>{{ $product->id }}</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $product->title }}</td>
                             <td style="max-width:220px; white-space:normal; word-break:break-word;">
                                 {{ Str::limit($product->description, 80, '...') }}</td>
                             <td>{{ $product->quantity }}</td>
                             <td>{{ $product->price }}</td>
-                            <td> <img src="{{ asset('storage/' . $product->product_image) }}" width="80" height="80"
+                            <td> <img class="img-thumbnail" src="{{ asset('storage/' . $product->product_image) }}" width="80" height="80"
                                     load="lazy" alt="{{ $product->title }}" style="object-fit:cover;"></td>
                             <td>{{ $product->category->name }}</td>
                             <td>

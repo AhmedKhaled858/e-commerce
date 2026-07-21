@@ -24,10 +24,12 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             //
-            'category_name'=>'required|string|max:255',
+            'category_name'=>'required|unique:categories,name,except,id|string|min:4|max:255|fillter:admin,superadmin',
             'parent_id'=>'nullable|exists:categories,id',
             'description'=>'nullable|string',
             'image'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'status'=>'in:active,archived',
+            
             
         ];
     }
@@ -42,6 +44,7 @@ class StoreCategoryRequest extends FormRequest
             'image.image' => 'The file must be an image',
             'image.mimes' => 'The image must be a file of type: jpeg, png, jpg, gif, svg',
             'image.max' => 'The image size must not exceed 2048 kilobytes',
+            'status.in' => 'Status must be either active or archived',
         ];
     }
 }

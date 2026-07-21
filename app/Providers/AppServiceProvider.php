@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use App\Enums\UserType;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -20,8 +22,11 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {
-
+    {   
+        // custom validation rule for filtering 
+        Validator::extend('fillter',function($_attribute,$value,$parameters){
+            return !in_array(strtolower($value),$parameters);
+        },'The :attribute is not allowed.');
         //
         Paginator::useBootstrapFive();
 

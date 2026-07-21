@@ -27,18 +27,25 @@ class AdminController extends Controller
         return view('admin.createcategory', compact('categories', 'category'));
     }
     public function storeCategory(StoreCategoryRequest $request)
-    {  
-        $data = [
+    { 
+        try{
+         $data = [
             'name' => $request->category_name,
             'parent_id' => $request->parent_id,
             'slug' => Str::slug($request->category_name),
             'description' => $request->category_description,
+            'status' => $request->status,
         ];
         if ($request->hasFile('category_image')) {
             $data['image'] = $request->file('category_image')->store('categories', 'public');
         }
         Category::create($data);
         return redirect()->route('admin.createCategory')->with('success', 'Category created successfully');
+        } 
+        catch (\Exception $e) {
+            return redirect()->route('admin.createCategory')->with('error', 'An error occurred while creating the category: ' . $e->getMessage());
+        }
+       
     }
     public function listCategories()
     {
@@ -60,7 +67,7 @@ class AdminController extends Controller
         }
        
     }
-    public function editCategory(Request $request, $id)
+    public function editCategory(StoreCategoryRequest $request, $id)
     {
         try {
             $category = Category::findorFail($id);

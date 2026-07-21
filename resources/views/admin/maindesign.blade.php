@@ -170,7 +170,9 @@
                 </div>
             </div>
             <section class="no-padding-top no-padding-bottom">
-                @include('partials.flash_messages')
+                <x-alert />
+                {{-- <x-alert type="success" message="This is a success message." />
+                {{-- @include('partials.flash_messages') --}}
                 @yield('dashboard')
                 @yield('analysis')
                 @yield('listcategory')

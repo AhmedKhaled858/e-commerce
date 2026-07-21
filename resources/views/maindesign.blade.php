@@ -37,8 +37,7 @@
 </head>
 
 <body>
-    
-   @include('partials.flash_messages')
+    <x-alert />
    @include('partials.header-home')
    @yield('content')
    <br></br> <br></br>

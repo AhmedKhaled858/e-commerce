@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreCategoryRequest extends FormRequest
 {
@@ -22,9 +23,17 @@ class StoreCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        $category_id=$this->route('id');
         return [
             //
-            'category_name'=>'required|unique:categories,name,except,id|string|min:4|max:255|fillter:admin,superadmin',
+            'category_name'=>[
+            
+                'required',
+                'string',
+                'max:255',
+                'filter:admin,administrator,superuser,root,system,manager,moderator,owner,webmaster,developer,editor,contributor,subscriber,user,guest,test,demo,temp,temporary,invalid,null,n/a,none,unknown',
+                Rule::unique('categories','name')->ignore($category_id),
+            ],
             'parent_id'=>'nullable|exists:categories,id',
             'description'=>'nullable|string',
             'image'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

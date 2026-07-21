@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {   
         // custom validation rule for filtering 
-        Validator::extend('fillter',function($_attribute,$value,$parameters){
+        Validator::extend('filter',function($_attribute,$value,$parameters){
             return !in_array(strtolower($value),$parameters);
         },'The :attribute is not allowed.');
         //

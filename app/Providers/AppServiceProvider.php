@@ -27,7 +27,8 @@ class AppServiceProvider extends ServiceProvider
         Validator::extend('filter',function($_attribute,$value,$parameters){
             return !in_array(strtolower($value),$parameters);
         },'The :attribute is not allowed.');
-        //
+
+        //paginator bootstrap 5
         Paginator::useBootstrapFive();
 
         // create admin gate

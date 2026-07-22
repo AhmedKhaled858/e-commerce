@@ -5,6 +5,13 @@
     </div>
     <div class="container">
         <h2>Categories List</h2>
+        <br>
+        <form action="{{ route('admin.listCategories') }}" method="GET" class="d-flex justify-content-between mb-4">
+            <x-form.input name="search" type="text" class="mx-3" placeholder="Search categories..."
+                value="{{ request('search') }}" />
+            <x-form.select id="status" name="status" :options="[['id' => 'active', 'name' => 'Active'], ['id' => 'archived', 'name' => 'Archived']]" :value="request('status')" placeholder="Select Status" />
+            <button type="submit" class="btn btn-primary mx-2">Search</button>
+        </form>
         <table class="table table-hover align-middle">
             <thead class="table-light">
                 <tr>
@@ -13,6 +20,7 @@
                     <th>Parent Category</th>
                     <th>Description</th>
                     <th>Image</th>
+                    <th>Status</th>
                     <th>created_at</th>
                     <th>Actions</th>
                 </tr>
@@ -38,6 +46,7 @@
                                 No Image
                             @endif
                         </td>
+                        <td>{{ $category->status }}</td>
                         <td>{{ $category->created_at }}</td>
                         <td>
 
@@ -61,10 +70,11 @@
                     @include('admin.editcategory')
                 @empty
                     <tr>
-                        <td class="text-center" colspan="6">No categories found.</td>
+                        <td class="text-center" colspan="8">No categories found.</td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
+        {{ $categories->withQueryString()->links() }}
         <script src="{{ asset('front_end/js/timeout.js') }}"></script>
     @endsection

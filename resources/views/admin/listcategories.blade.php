@@ -46,7 +46,7 @@
                                 No Image
                             @endif
                         </td>
-                        <td>{{ $category->status }}</td>
+                        <td>{{ Str::title($category->status) }}</td>
                         <td>{{ $category->created_at }}</td>
                         <td>
 

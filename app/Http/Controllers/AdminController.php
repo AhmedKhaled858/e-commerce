@@ -49,16 +49,7 @@ class AdminController extends Controller
     }
     public function listCategories(Request $request)
     {
-        $categories = Category::query()
-        ->when($request->filled('search'), function ($query) use ($request) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        })
-        ->when($request->filled('status'), function ($query) use ($request) {
-            $query->where('status', $request->status);
-        })
-        ->paginate(5);
-
-        // $categories = $query->paginate(5);
+        $categories = Category::filter($request->query())->paginate(5);
         return view('admin.listcategories', compact('categories'));
     }
     public function deleteCategory($id)

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 class Category extends Model
 {
@@ -22,5 +23,13 @@ class Category extends Model
                 $query->whereNull('parent_id')->orWhere('parent_id', '<>', $this->id);
             })
             ->get();
+    }
+    public function scopeFilter(Builder $builder,$filters){
+        $builder ->when($filters['search']??false, function ($query,$value) {
+            $query->where('name', 'like', "%{$value}%");
+        })
+        ->when($filters['status']??false, function ($query,$value) {
+            $query->where('status', $value);
+        });
     }
 }

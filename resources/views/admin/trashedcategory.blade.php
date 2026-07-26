@@ -1,19 +1,19 @@
 @extends('admin.maindesign')
-@section('listcategory')
+@section('trashcategory')
     <div id="loadingScreen">
         <div class="spinner"></div>
     </div>
     <div class="container -mb-px">
-        <h2>Categories List</h2>
+        <h2>Categories Trash</h2>
         <div class="m-2">
-            <a href="{{route("admin.createCategory")}}" class="btn btn-sm btn-outline-info mr-2">Create</a>
-            <a href="{{route("admin.trashCategory")}}" class="btn btn-sm btn-outline-primary">Trash</a>
+          <a href="{{ url()->previous() }}" class="btn btn-sm btn-outline-secondary me-2">
+              <i class="fa fa-arrow-left"></i> Back
+        </a>
         </div>
         <br>
-        <form action="{{ route('admin.listCategories') }}" method="GET" class="d-flex justify-content-between mb-4">
-            <x-form.input name="search" type="text" class="mx-3" placeholder="Search categories..."
+        <form action="{{ route('admin.trashCategory') }}" method="GET" class="d-flex justify-content-between mb-4">
+            <x-form.input name="search" type="text" class="mx-3" placeholder="Search categories Trash..."
                 value="{{ request('search') }}" />
-            <x-form.select id="status" name="status" :options="[['id' => 'active', 'name' => 'Active'], ['id' => 'archived', 'name' => 'Archived']]" :value="request('status')" placeholder="Select Status" />
             <button type="submit" class="btn btn-primary mx-2">Search</button>
         </form>
         <table class="table table-hover align-middle">
@@ -21,11 +21,10 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Parent Category</th>
                     <th>Description</th>
                     <th>Image</th>
                     <th>Status</th>
-                    <th>created_at</th>
+                    <th>Deleted At</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -36,7 +35,7 @@
 
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $category->name }}</td>
-                        <td>{{ $category->parent ? $category->parent->name : 'None' }}</td>
+                      
                         <td>
                             <div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                 {{ $category->description }}
@@ -51,15 +50,22 @@
                             @endif
                         </td>
                         <td>{{ Str::title($category->status) }}</td>
-                        <td>{{ $category->created_at }}</td>
+                        <td>{{ $category->deleted_at }}</td>
                         <td>
 
                             <div style="display: flex; justify-content: center; gap: 10px;">
-                                <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale" data-toggle="modal"
+                                {{-- <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale" data-toggle="modal"
                                     href="#edit{{ $category->id }}">
-                                    <i class="las la-pen"></i>Edit</a>
-
-                                <form action="{{ route('admin.deleteCategory', $category->id) }}" method="POST"
+                                    <i class="las la-pen"></i>Edit</a> --}}
+                                
+                                <form action="{{ route('admin.restoreCategory', $category->id) }}" method="POST"
+                                    style="display: inline;">
+                                    @csrf
+                                    @method('put')
+                                    <button type="submit" class="btn btn-sm btn-outline-info"
+                                        >Restore</button>
+                                </form>
+                                <form action="{{ route('admin.forceDeleteCategory', $category->id) }}" method="POST"
                                     style="display: inline;">
                                     @csrf
                                     @method('DELETE')

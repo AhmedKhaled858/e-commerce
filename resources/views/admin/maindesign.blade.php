@@ -176,6 +176,7 @@
                 @yield('dashboard')
                 @yield('analysis')
                 @yield('listcategory')
+                @yield('trashcategory')
                 @yield('createcategory')
                 @yield('addproduct')
                 @yield('viewproducts')

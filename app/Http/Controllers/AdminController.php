@@ -21,79 +21,114 @@ class AdminController extends Controller
     //
     //! start functions for category
     public function createCategory()
-    {
-        $categories = Category::all();
-        $category=new category();
-        return view('admin.createcategory', compact('categories', 'category'));
-    }
+        {
+            $categories = Category::all();
+            $category=new category();
+            return view('admin.createcategory', compact('categories', 'category'));
+        }
     public function storeCategory(StoreCategoryRequest $request)
-    { 
-        try{
-         $data = [
-            'name' => $request->category_name,
-            'parent_id' => $request->parent_id,
-            'slug' => Str::slug($request->category_name),
-            'description' => $request->category_description,
-            'status' => $request->status,
-        ];
-        if ($request->hasFile('category_image')) {
-            $data['image'] = $request->file('category_image')->store('categories', 'public');
-        }
-        Category::create($data);
-        return redirect()->route('admin.createCategory')->with('success', 'Category created successfully');
-        } 
-        catch (\Exception $e) {
-            return redirect()->route('admin.createCategory')->with('error', 'An error occurred while creating the category: ' . $e->getMessage());
-        }
-       
-    }
-    public function listCategories(Request $request)
-    {
-        $categories = Category::filter($request->query())->paginate(5);
-        return view('admin.listcategories', compact('categories'));
-    }
-    public function deleteCategory($id)
-    {
-        try{
-             $category = Category::find($id);
-        if ($category->image) {
-           Storage::disk('public')->delete($category->image);
-        }
-        $category->delete();
-        return redirect()->route('admin.listCategories')->with('success', 'Category deleted successfully');
-        }
-        catch (\Exception $e) {
-            return redirect()->route('admin.listCategories')->with('error', 'An error occurred while deleting the category: ' . $e->getMessage());
-        }
-       
-    }
-    public function editCategory(StoreCategoryRequest $request, $id)
-    {
-        try {
-            $category = Category::findorFail($id);
-            $category->update([
-                'name' => $request->input('category_name'),
-                'parent_id' => $request->input('parent_id'),
-                'slug' => Str::slug($request->input('category_name')),
-                'description' => $request->input('category_description'),
-                'status' => $request->input('status'),
-            ]);
+        { 
+            try{
+            $data = [
+                'name' => $request->category_name,
+                'parent_id' => $request->parent_id,
+                'slug' => Str::slug($request->category_name),
+                'description' => $request->category_description,
+                'status' => $request->status,
+            ];
             if ($request->hasFile('category_image')) {
-                // Delete the old image if it exists
-                if (isset($category->image)) {
-                    Storage::disk('public')->delete($category->image);
-                }
-                // Store the new image
-                $category->image = $request->file('category_image')->store('categories', 'public');
+                $data['image'] = $request->file('category_image')->store('categories', 'public');
             }
-            $category->save();
-            return redirect()->route('admin.listCategories')->with('success', 'Category updated successfully');
-        } catch (\Exception $e) {
-            return redirect()
-                ->route('admin.listCategories')
-                ->with('error', 'An error occurred while updating the category: ' . $e->getMessage());
+            Category::create($data);
+            return redirect()->route('admin.createCategory')->with('success', 'Category created successfully');
+            } 
+            catch (\Exception $e) {
+                return redirect()->route('admin.createCategory')->with('error', 'An error occurred while creating the category: ' . $e->getMessage());
+            }
+        
         }
+    public function listCategories(Request $request)
+        {
+            $categories = Category::filter($request->query())->paginate(5);
+            return view('admin.listcategories', compact('categories'));
+        }
+   
+    public function editCategory(StoreCategoryRequest $request, $id)
+        {
+            try {
+                $category = Category::findorFail($id);
+                $category->update([
+                    'name' => $request->input('category_name'),
+                    'parent_id' => $request->input('parent_id'),
+                    'slug' => Str::slug($request->input('category_name')),
+                    'description' => $request->input('category_description'),
+                    'status' => $request->input('status'),
+                ]);
+                if ($request->hasFile('category_image')) {
+                    // Delete the old image if it exists
+                    if (isset($category->image)) {
+                        Storage::disk('public')->delete($category->image);
+                    }
+                    // Store the new image
+                    $category->image = $request->file('category_image')->store('categories', 'public');
+                }
+                $category->save();
+                return redirect()->route('admin.listCategories')->with('success', 'Category updated successfully');
+            } catch (\Exception $e) {
+                return redirect()
+                    ->route('admin.listCategories')
+                    ->with('error', 'An error occurred while updating the category: ' . $e->getMessage());
+            }
+        }
+    public function deleteCategory($id){
+            try{
+                $category = Category::find($id);
+           
+              $category->update([
+                'status'=>'archived'
+            ]);
+            $category->delete();
+          
+            return redirect()->route('admin.listCategories')->with('success', 'Category deleted successfully');
+            }
+            catch (\Exception $e) {
+                return redirect()->route('admin.listCategories')->with('error', 'An error occurred while deleting the category: ' . $e->getMessage());
+            }
+        
+     }
+    public function trashCategory(Request $request){
+        try{
+             $categories=Category::filter($request->query())->onlyTrashed()->paginate(5);
+             return view('admin.trashedcategory',compact('categories'));
+        }
+        catch (\Exception $e) {
+                return redirect()->route('admin.listCategories')->with('error',  $e->getMessage());
+            }
     }
+    public function restoreCategory(Request $request,$id){
+        try{
+             $category=Category::onlyTrashed()->findOrFail($id);
+             $category->restore();
+            return redirect()->route('admin.trashCategory')->with('success','Category Restore successfully');
+        }
+        catch(\Exception $e){
+             return redirect()->route('admin.trashCategory')->with('error','An error occurred while retoring the category: '.  $e->getMessage());
+        }
+       
+     }
+     public function forceDeleteCategory(Request $request ,$id){
+        try{
+             $category=Category::onlyTrashed()->findOrFail($id);
+        $category->forceDelete();
+         if ($category->image) {
+               Storage::disk('public')->delete($category->image);
+            }
+        return redirect()->route('admin.listCategories')->with('success',"The category has been permanently deleted");
+        }
+        catch(\Exception $e){
+             return redirect()->route('admin.trashCategory')->with('error','An error occurred while deleting the category: '.  $e->getMessage());
+        }
+     }
     //?end functions for category
 
     //! start functions for product

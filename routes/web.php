@@ -50,6 +50,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/listCategories', [AdminController::class, 'listCategories'])->name('admin.listCategories');
     Route::delete('/deleteCategory/{id}', [AdminController::class, 'deleteCategory'])->name('admin.deleteCategory');
     Route::post('/editCategory/{id}', [AdminController::class, 'editCategory'])->name('admin.editCategory');
+    Route::get('/categories/trash',[AdminController::class,'trashCategory'])->name('admin.trashCategory');
+    Route::put('/categries/{id}/restore',[AdminController::class,'restoreCategory'])->name('admin.restoreCategory');
+    Route::delete('/categories/{id}/force-delete',[AdminController::class,'forceDeleteCategory'])->name('admin.forceDeleteCategory');
     Route::get('/addProduct', [AdminController::class, 'addProduct'])->name('admin.addProduct');
     Route::post('/storeProduct', [AdminController::class, 'storeProduct'])->name('admin.storeProduct');
     Route::get('/ViewProducts', [AdminController::class, 'ViewProducts'])->name('admin.ViewProducts');

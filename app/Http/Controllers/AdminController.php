@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Order;
+use App\Models\Store;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -80,6 +81,12 @@ class AdminController extends Controller
                     ->with('error', 'An error occurred while updating the category: ' . $e->getMessage());
             }
         }
+        public function getCategory(Category $category){
+         return response()->json([
+        'category' => $category,
+        'parents' => $category->availableParents(),
+    ]);
+        }
     public function deleteCategory($id){
             try{
                 $category = Category::find($id);
@@ -143,10 +150,12 @@ class AdminController extends Controller
     {
         $data = [
             'title' => $request->product_title,
+            'slug'=>Str::slug($request->product_title),
             'description' => $request->product_description,
             'quantity' => $request->product_quantity,
             'price' => $request->product_price,
             'category_id' => $request->product_category,
+            'store_id'=>Auth::user()->store_id,
         ];
 
         if ($request->hasFile('product_image')) {
@@ -160,10 +169,11 @@ class AdminController extends Controller
     // view products function with pagination
     public function ViewProducts()
     {
-        $products = Product::with('category:id,name')->select('id', 'title', 'description', 'quantity', 'price', 'product_image', 'category_id')->paginate(10);
+        $products = Product::with(['category:id,name','store:id,name'])->paginate(10);
         $categories = Category::all();
+        // $stores=Store::all();
 
-        return view('admin.viewproducts', compact('products', 'categories'));
+        return view('admin.viewproducts', compact('products', 'categories',));
     }
     // delete product function
     public function deleteProduct($id)
@@ -208,6 +218,9 @@ class AdminController extends Controller
                 ->route('admin.ViewProducts')
                 ->with('error', 'An error occurred while updating the product: ' . $e->getMessage());
         }
+    }
+    public function updateproduct(Product $product){
+    return response()->json($product);
     }
     //? end functions for product
     // view orders function

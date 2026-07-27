@@ -1,9 +1,7 @@
 @extends('admin.maindesign')
 @section('viewproducts')
 
-    <div id="loadingScreen">
-        <div class="spinner"></div>
-    </div>
+    
     <div class="container-fluid px-5">
 
         <h2>Products List</h2>
@@ -17,6 +15,7 @@
                     <th>Price</th>
                     <th>Image</th>
                     <th>Category</th>
+                    <th>Store</th>
                     <th style="width:150px;">Actions</th>
                 </tr>
 
@@ -25,12 +24,12 @@
 
                 @if ($products->isEmpty())
                     <tr>
-                        <td class="text-center align-middle" colspan="8">No products found.</td>
+                        <td class="text-center align-middle" colspan="9">No products found.</td>
                     </tr>
                 @else
                     @foreach ($products as $product)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
+                            <td>{{  $products->firstItem() + $loop->index  }}</td>
                             <td>{{ $product->title }}</td>
                             <td style="max-width:220px; white-space:normal; word-break:break-word;">
                                 {{ Str::limit($product->description, 80, '...') }}</td>
@@ -39,9 +38,16 @@
                             <td> <img class="img-thumbnail" src="{{ asset('storage/' . $product->product_image) }}" width="80" height="80"
                                     load="lazy" alt="{{ $product->title }}" style="object-fit:cover;"></td>
                             <td>{{ $product->category->name }}</td>
+                            <td>{{ $product->store->name??'' }}</td>
                             <td>
-                                <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale" data-toggle="modal"
-                                    href="#edit{{ $product->id }}"><i class="las la-pen"></i>Edit</a>
+                                {{-- <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale" data-toggle="modal"
+                                    href="#edit{{ $product->id }}"><i class="las la-pen"></i>Edit</a> --}}
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-info edit-product"
+                                        data-id="{{ $product->id }}">
+                                        <i class="las la-pen"></i> Edit
+                                    </button>
                                 <form action="{{ route('admin.deleteProduct', $product->id) }}" method="POST"
                                     style="display: inline;">
                                     @csrf
@@ -52,13 +58,14 @@
                             </td>
 
                         </tr>
-                        @include('admin.editproduct')
+                        {{-- @include('admin.editproduct') --}}
                     @endforeach
-                    {{ $products->links() }}
+                    {{ $products->withQueryString()->links() }}
                 @endif
             </tbody>
 
         </table>
+        @include('admin.editproduct')
     </div>
 
 

@@ -49,7 +49,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/storeCategory', [AdminController::class, 'storeCategory'])->name('admin.storeCategory');
     Route::get('/listCategories', [AdminController::class, 'listCategories'])->name('admin.listCategories');
     Route::delete('/deleteCategory/{id}', [AdminController::class, 'deleteCategory'])->name('admin.deleteCategory');
-    Route::post('/editCategory/{id}', [AdminController::class, 'editCategory'])->name('admin.editCategory');
+    Route::put('/editCategory/{id}', [AdminController::class, 'editCategory'])->name('admin.editCategory');
+    Route::get('/categories/{category}/edit',[AdminController::class,'getCategory'])->name('admin.getCategory');
     Route::get('/categories/trash',[AdminController::class,'trashCategory'])->name('admin.trashCategory');
     Route::put('/categries/{id}/restore',[AdminController::class,'restoreCategory'])->name('admin.restoreCategory');
     Route::delete('/categories/{id}/force-delete',[AdminController::class,'forceDeleteCategory'])->name('admin.forceDeleteCategory');
@@ -58,6 +59,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/ViewProducts', [AdminController::class, 'ViewProducts'])->name('admin.ViewProducts');
     Route::delete('/deleteProduct/{id}', [AdminController::class, 'deleteProduct'])->name('admin.deleteProduct');
     Route::post('/editProduct/{id}', [AdminController::class, 'editProduct'])->name('admin.editProduct');
+    Route::get('/products/{product}/edit',[AdminController::class,'updateproduct'])->name('admin.updateproduct');
+
     Route::get('/ViewOrders', [AdminController::class, 'ViewOrders'])->name('admin.ViewOrders');
     Route::get('/OrderDetails/{id}', [AdminController::class, 'OrderDetails'])->name('admin.OrderDetails');
     Route::post('/updateOrderStatus/{id}', [AdminController::class, 'updateOrderStatus'])->name('admin.updateOrderStatus');

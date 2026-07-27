@@ -28,6 +28,7 @@
 </head>
 
 <body>
+    
     <header class="header">
         <nav class="navbar navbar-expand-lg">
             <div class="search-panel">
@@ -170,6 +171,11 @@
                 </div>
             </div>
             <section class="no-padding-top no-padding-bottom">
+                 <div id="loadingScreen">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
                 <x-alert />
                 {{-- <x-alert type="success" message="This is a success message." />
                 {{-- @include('partials.flash_messages') --}}
@@ -210,22 +216,7 @@
     <script src="{{asset('admin/js/charts-home.js') }}"></script>
     <script src="{{ asset('admin/js/front.js') }}"></script>
     <script src="{{ asset('front_end/js/timeout.js') }}"></script>
-
-
-    <script>
-        $('.dropdown-item').on('click', function(e) {
-            // منع الصفحة إنها تعمل Refresh لو اللينك فيه #
-            e.preventDefault();
-
-            // 1. جلب بيانات اللغة اللي اتداس عليها
-            var newImg = $(this).find('img').attr('src');
-            var newText = $(this).find('span').text();
-
-            // 2. تحديث الزرار الرئيسي (العلم والنص)
-            $('#languages img').attr('src', newImg);
-            $('#languages span').text(newText);
-        });
-    </script>
+    <script src="{{ asset('admin/js/custom.js') }}"> </script>
 </body>
 
 </html>

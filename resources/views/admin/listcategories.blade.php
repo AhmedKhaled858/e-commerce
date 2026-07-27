@@ -1,8 +1,6 @@
 @extends('admin.maindesign')
 @section('listcategory')
-    <div id="loadingScreen">
-        <div class="spinner"></div>
-    </div>
+ 
     <div class="container -mb-px">
         <h2>Categories List</h2>
         <div class="m-2">
@@ -16,7 +14,7 @@
             <x-form.select id="status" name="status" :options="[['id' => 'active', 'name' => 'Active'], ['id' => 'archived', 'name' => 'Archived']]" :value="request('status')" placeholder="Select Status" />
             <button type="submit" class="btn btn-primary mx-2">Search</button>
         </form>
-        <table class="table table-hover align-middle">
+        <table class="table table-bordered">
             <thead class="table-light">
                 <tr>
                     <th>ID</th>
@@ -34,7 +32,7 @@
                 @forelse($categories as $category)
                     <tr>
 
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{  $categories->firstItem() + $loop->index  }}</td>
                         <td>{{ $category->name }}</td>
                         <td>{{ $category->parent ? $category->parent->name : 'None' }}</td>
                         <td>
@@ -55,9 +53,15 @@
                         <td>
 
                             <div style="display: flex; justify-content: center; gap: 10px;">
-                                <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale" data-toggle="modal"
+                                <button
+                                    type="button"
+                                    class="btn btn-sm btn-info edit-category"
+                                    data-id="{{ $category->id }}">
+                                    <i class="las la-pen"></i> Edit
+                                </button>
+                                {{-- <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale" data-toggle="modal"
                                     href="#edit{{ $category->id }}">
-                                    <i class="las la-pen"></i>Edit</a>
+                                    <i class="las la-pen"></i>Edit</a> --}}
 
                                 <form action="{{ route('admin.deleteCategory', $category->id) }}" method="POST"
                                     style="display: inline;">
@@ -71,14 +75,17 @@
                         </td>
 
                     </tr>
-                    @include('admin.editcategory')
+                    {{-- @include('admin.editcategory') --}}
                 @empty
                     <tr>
                         <td class="text-center" colspan="8">No categories found.</td>
                     </tr>
+                    
                 @endforelse
+                 {{ $categories->withQueryString()->links() }}
             </tbody>
         </table>
-        {{ $categories->withQueryString()->links() }}
+        @include('admin.editcategory')
+       
         <script src="{{ asset('front_end/js/timeout.js') }}"></script>
     @endsection

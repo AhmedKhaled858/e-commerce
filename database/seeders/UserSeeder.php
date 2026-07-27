@@ -21,5 +21,11 @@ class UserSeeder extends Seeder
             'password' => Hash::make('123456789'),
             'user_type'=>UserType::Admin->value,
         ]);
+         User::factory()->create([
+            'name' => 'user',
+            'email' => 'user@user.com',
+            'password' => Hash::make('123456789'),
+            'user_type'=>UserType::User->value,
+        ]);
     }
 }

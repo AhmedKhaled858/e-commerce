@@ -48,7 +48,7 @@ It provides a complete online shopping experience including products, cart, orde
 
 ---
 ## Admin Credentials  
-Email: admin@gmail.com  
+Email: admin@admin.com  
 Password: 123456789
 
 

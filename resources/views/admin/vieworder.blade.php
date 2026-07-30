@@ -1,74 +1,11 @@
 @extends('admin.maindesign')
 
 @section('view_orders')
-    <style>
-        /* ===== ORDER TABLE MODERN STYLE ===== */
 
-        .order-card {
-            background: #111827;
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
+    <head>
+        <link rel="stylesheet" href="{{ asset('admin/css/customstyle.css') }}">
 
-        .order-table {
-            color: #e5e7eb;
-        }
-
-        .order-table thead {
-            background: #0f172a;
-        }
-
-        .order-table tbody tr {
-            transition: 0.2s ease;
-        }
-
-        .order-table tbody tr:hover {
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        /* Status badges */
-        .status-badge {
-            padding: 5px 12px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .status-pending {
-            background: rgba(245, 158, 11, 0.15);
-            color: #fbbf24;
-        }
-
-        .status-completed {
-            background: rgba(34, 197, 94, 0.15);
-            color: #4ade80;
-        }
-
-        .status-cancelled {
-            background: rgba(239, 68, 68, 0.15);
-            color: #f87171;
-        }
-
-        /* Buttons */
-        .btn-icon {
-            border-radius: 10px;
-            transition: 0.2s;
-        }
-
-        .btn-icon:hover {
-            transform: translateY(-2px);
-        }
-
-        /* Select */
-        .status-select {
-            background: #1f2937;
-            color: #fff;
-            border: 1px solid #374151;
-            border-radius: 8px;
-        }
-    </style>
+    </head>
 
     <div class="container-fluid px-4">
 
@@ -96,7 +33,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($orders as $order)
+                        @forelse ($orders as $order)
                             <tr>
 
                                 {{-- ID --}}
@@ -158,7 +95,7 @@
                                             class="btn btn-sm btn-outline-info btn-icon">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                            
+
                                         {{-- EDIT --}}
                                         <button type="button"
                                             class="btn btn-sm btn-outline-warning btn-icon edit-order-btn">
@@ -175,7 +112,12 @@
                                 </td>
 
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td class="text-center" colspan="7">No Orders found.</td>
+                            </tr>
+                        @endforelse
+
                     </tbody>
 
                 </table>

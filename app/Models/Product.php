@@ -6,12 +6,22 @@ use App\Models\Scopes\StoreSCope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Override;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class Product extends Model
 {
     //
     use HasFactory;
     protected $guarded = [];
+     public function scopeFilter(Builder $builder,$filters){
+        $builder ->when($filters['search']??false, function ($query,$value) {
+            $query->where('title', 'like', "%{$value}%");
+        })
+        ->when($filters['status']??false, function ($query,$value) {
+            $query->where('status', $value);
+        });
+    }
    // this is the global scope calling to return only product for auth user (store_id)
     protected static function booted()
     {

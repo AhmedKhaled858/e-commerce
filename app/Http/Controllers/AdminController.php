@@ -50,7 +50,14 @@ class AdminController extends Controller
         }
     public function listCategories(Request $request)
         {
-            $categories = Category::filter($request->query())->paginate(5);
+            $categories = Category::with('parent')
+            //here trying when use the withcount to return count use condition with it like status ='active'
+            ->withCount([
+                'products'=>function($query){
+                    $query->where('status','active');
+                }
+                ])
+            ->filter($request->query())->paginate(5);
             return view('admin.listcategories', compact('categories'));
         }
    
@@ -136,6 +143,12 @@ class AdminController extends Controller
              return redirect()->route('admin.trashCategory')->with('error','An error occurred while deleting the category: '.  $e->getMessage());
         }
      }
+     //to display products inside category
+     public function showCategory(Category $category){
+        return view('admin.showcategory',[
+            'category'=>$category
+        ]);
+     }
     //?end functions for category
 
     //! start functions for product
@@ -167,9 +180,11 @@ class AdminController extends Controller
         return redirect()->route('admin.addProduct')->with('success', 'Product created successfully');
     }
     // view products function with pagination
-    public function ViewProducts()
+    public function ViewProducts(Request $request)
     {
-        $products = Product::with(['category:id,name','store:id,name'])->paginate(10);
+        $products = Product::with(['category:id,name','store:id,name'])
+        ->filter($request->query())
+        ->paginate(10);
         $categories = Category::all();
         // $stores=Store::all();
 

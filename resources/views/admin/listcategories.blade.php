@@ -1,11 +1,10 @@
 @extends('admin.maindesign')
 @section('listcategory')
- 
     <div class="container -mb-px">
         <h2>Categories List</h2>
         <div class="m-2">
-            <a href="{{route("admin.createCategory")}}" class="btn btn-sm btn-outline-info mr-2">Create</a>
-            <a href="{{route("admin.trashCategory")}}" class="btn btn-sm btn-outline-primary">Trash</a>
+            <a href="{{ route('admin.createCategory') }}" class="btn btn-sm btn-outline-info mr-2">Create</a>
+            <a href="{{ route('admin.trashCategory') }}" class="btn btn-sm btn-outline-primary">Trash</a>
         </div>
         <br>
         <form action="{{ route('admin.listCategories') }}" method="GET" class="d-flex justify-content-between mb-4">
@@ -21,6 +20,7 @@
                     <th>Name</th>
                     <th>Parent Category</th>
                     <th>Description</th>
+                    <th>Products #</th>
                     <th>Image</th>
                     <th>Status</th>
                     <th>created_at</th>
@@ -32,14 +32,15 @@
                 @forelse($categories as $category)
                     <tr>
 
-                        <td>{{  $categories->firstItem() + $loop->index  }}</td>
-                        <td>{{ $category->name }}</td>
+                        <td>{{ $categories->firstItem() + $loop->index }}</td>
+                        <td><a href="{{ route('admin.showCategory', $category->id) }}">{{ $category->name }}</td>
                         <td>{{ $category->parent ? $category->parent->name : 'None' }}</td>
                         <td>
                             <div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                 {{ $category->description }}
                             </div>
                         </td>
+                        <td>{{ $category->products_count }}</td>
                         <td>
                             @if ($category->image)
                                 <img class="img-thumbnail" id='img-cover' src="{{ asset('storage/' . $category->image) }}"
@@ -53,9 +54,7 @@
                         <td>
 
                             <div style="display: flex; justify-content: center; gap: 10px;">
-                                <button
-                                    type="button"
-                                    class="btn btn-sm btn-info edit-category"
+                                <button type="button" class="btn btn-sm btn-info edit-category"
                                     data-id="{{ $category->id }}">
                                     <i class="las la-pen"></i> Edit
                                 </button>
@@ -75,17 +74,16 @@
                         </td>
 
                     </tr>
-                    {{-- @include('admin.editcategory') --}}
                 @empty
                     <tr>
                         <td class="text-center" colspan="8">No categories found.</td>
                     </tr>
-                    
                 @endforelse
-                 {{ $categories->withQueryString()->links() }}
+
             </tbody>
         </table>
+        {{ $categories->withQueryString()->links() }}
         @include('admin.editcategory')
-       
+
         <script src="{{ asset('front_end/js/timeout.js') }}"></script>
     @endsection

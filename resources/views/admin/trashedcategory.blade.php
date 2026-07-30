@@ -1,14 +1,11 @@
 @extends('admin.maindesign')
 @section('trashcategory')
-    <div id="loadingScreen">
-        <div class="spinner"></div>
-    </div>
     <div class="container -mb-px">
         <h2>Categories Trash</h2>
         <div class="m-2">
-          <a href="{{ url()->previous() }}" class="btn btn-sm btn-outline-secondary me-2">
-              <i class="fa fa-arrow-left"></i> Back
-        </a>
+            <a href="{{ url()->previous() }}" class="btn btn-sm btn-outline-secondary me-2">
+                <i class="fa fa-arrow-left"></i> Back
+            </a>
         </div>
         <br>
         <form action="{{ route('admin.trashCategory') }}" method="GET" class="d-flex justify-content-between mb-4">
@@ -35,7 +32,7 @@
 
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $category->name }}</td>
-                      
+
                         <td>
                             <div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                 {{ $category->description }}
@@ -57,13 +54,12 @@
                                 {{-- <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale" data-toggle="modal"
                                     href="#edit{{ $category->id }}">
                                     <i class="las la-pen"></i>Edit</a> --}}
-                                
+
                                 <form action="{{ route('admin.restoreCategory', $category->id) }}" method="POST"
                                     style="display: inline;">
                                     @csrf
                                     @method('put')
-                                    <button type="submit" class="btn btn-sm btn-outline-info"
-                                        >Restore</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-info">Restore</button>
                                 </form>
                                 <form action="{{ route('admin.forceDeleteCategory', $category->id) }}" method="POST"
                                     style="display: inline;">

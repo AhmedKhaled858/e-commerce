@@ -61,7 +61,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::delete('/deleteProduct/{id}', [AdminController::class, 'deleteProduct'])->name('admin.deleteProduct');
     Route::post('/editProduct/{id}', [AdminController::class, 'editProduct'])->name('admin.editProduct');
     Route::get('/products/{product}/edit',[AdminController::class,'updateproduct'])->name('admin.updateproduct');
-
+    Route::get('/products/trash',[AdminController::class,'trashproduct'])->name('admin.trashProduct');
+    Route::put('/products/{id}/restore',[AdminController::class,'restoreProduct'])->name('admin.restoreProduct');
+    Route::delete('/products/{id}/force-delete',[AdminController::class,'forceDeleteProduct'])->name('admin.forceDeleteProduct');
     Route::get('/ViewOrders', [AdminController::class, 'ViewOrders'])->name('admin.ViewOrders');
     Route::get('/OrderDetails/{id}', [AdminController::class, 'OrderDetails'])->name('admin.OrderDetails');
     Route::post('/updateOrderStatus/{id}', [AdminController::class, 'updateOrderStatus'])->name('admin.updateOrderStatus');

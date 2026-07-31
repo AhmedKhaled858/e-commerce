@@ -113,6 +113,7 @@ class AdminController extends Controller
     public function trashCategory(Request $request){
         try{
              $categories=Category::filter($request->query())->onlyTrashed()->paginate(5);
+            //  dd($categories);
              return view('admin.trashedcategory',compact('categories'));
         }
         catch (\Exception $e) {
@@ -194,16 +195,50 @@ class AdminController extends Controller
     public function deleteProduct($id)
     {
         $product = Product::find($id);
-        $imagePath = public_path($product->product_image);
-        if (file_exists($imagePath)) {
-            unlink($imagePath);
-        }
+        // $imagePath = public_path($product->product_image);
+        // if (file_exists($imagePath)) {
+        //     unlink($imagePath);
+        // }
         if ($product) {
             $product->delete();
             return redirect()->route('admin.ViewProducts')->with('success', 'Product deleted successfully');
         }
         return redirect()->route('admin.ViewProducts')->with('error', 'Product not found');
     }
+     public function trashproduct(Request $request){
+        try{
+             $products=Product::filter($request->query())->onlyTrashed()->paginate(5);
+            //  dd($products);
+             return view('admin.trashedproduct',compact('products'));
+        }
+        catch (\Exception $e) {
+                return redirect()->route('admin.ViewProducts')->with('error',  $e->getMessage());
+            }
+    }
+    public function restoreProduct(Request $request,$id){
+        try{
+             $product=Product::onlyTrashed()->findOrFail($id);
+             $product->restore();
+            return redirect()->route('admin.trashProduct')->with('success','Product Restore successfully');
+        }
+        catch(\Exception $e){
+             return redirect()->route('admin.trashCategory')->with('error','An error occurred while retoring the Product: '.  $e->getMessage());
+        }
+       
+     }
+     public function forceDeleteProduct(Request $request ,$id){
+        try{
+             $product=Product::onlyTrashed()->findOrFail($id);
+        $product->forceDelete();
+         if ($product->image) {
+               Storage::disk('public')->delete($product->image);
+            }
+        return redirect()->route('admin.ViewProducts')->with('success',"The Product has been permanently deleted");
+        }
+        catch(\Exception $e){
+             return redirect()->route('admin.trashProduct')->with('error','An error occurred while deleting the Product: '.  $e->getMessage());
+        }
+     }
     // edit product function
     public function editProduct(UpdateProductRequest $request, $id)
     {
@@ -212,6 +247,7 @@ class AdminController extends Controller
 
             $data = [
                 'title' => $request->product_title,
+                'slug'=>Str::slug($request->product_title),
                 'description' => $request->product_description,
                 'quantity' => $request->product_quantity,
                 'price' => $request->product_price,

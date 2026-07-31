@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Override;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Product extends Model
 {
     //
-    use HasFactory;
+    use HasFactory,SoftDeletes;
     protected $guarded = [];
      public function scopeFilter(Builder $builder,$filters){
         $builder ->when($filters['search']??false, function ($query,$value) {

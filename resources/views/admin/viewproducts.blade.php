@@ -5,7 +5,7 @@
         <h2>Products List</h2>
         <div class="m-2">
             <a href="{{ route('admin.addProduct') }}" class="btn btn-sm btn-outline-info mr-2">Create</a>
-            <a href="#" class="btn btn-sm btn-outline-primary">Trash</a>
+            <a href="{{route('admin.trashProduct')}}" class="btn btn-sm btn-outline-primary">Trash</a>
         </div>
         <br>
         <form action="{{ route('admin.ViewProducts') }}" method="GET" class="d-flex justify-content-between mb-4">

@@ -38,7 +38,7 @@ Route::get('/testimonial', [HomeController::class, 'testimonial'])->name('testim
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::POST('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 // i want to make a route group for admin and only admin can access those routes convert it to string and compare it with user type in the middleware

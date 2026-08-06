@@ -18,14 +18,26 @@
 >
     <option value="">{{ $placeholder }}</option>
 
-    @foreach ($options as $option)
-        <option
-            value="{{ data_get($option, $optionValue) }}"
-            @selected(old($name, $value) == data_get($option, $optionValue))
-        >
-            {{ data_get($option, $optionLabel) }}
-        </option>
-    @endforeach
+    @foreach ($options as $key => $option)
+
+    @php
+        $optionValueData = is_array($option) || is_object($option)
+            ? data_get($option, $optionValue)
+            : $key;
+
+        $optionLabelData = is_array($option) || is_object($option)
+            ? data_get($option, $optionLabel)
+            : $option;
+    @endphp
+
+    <option
+        value="{{ $optionValueData }}"
+        @selected(old($name, $value) == $optionValueData)
+    >
+        {{ $optionLabelData }}
+    </option>
+
+@endforeach
 </select>
 
 @error($name)

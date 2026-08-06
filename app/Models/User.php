@@ -51,6 +51,9 @@ class User extends Authenticatable implements MustVerifyEmail
             'user_type' => UserType::class,
         ];
     }
+    public function profile(){
+        return $this->hasOne(Profile::class)->withDefault();
+    }
     public function reviews(){
         return $this->hasMany(Review::class);
     }

@@ -20,7 +20,7 @@
 <x-form.select
     id="parent_id"
     name="parent_id"
-    :options="[]"
+    :options="$categories"
     placeholder="Select Parent Category"
 />
 

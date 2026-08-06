@@ -128,10 +128,12 @@
         <nav id="sidebar">
             <!-- Sidebar Header-->
             <div class="sidebar-header d-flex align-items-center">
-                <div class="avatar"><img src="{{asset('admin/img/avatar-6.jpg')}}" alt="..."
-                        class="img-fluid rounded-circle"></div>
+                <div class="avatar">
+                    <img src="{{  asset('storage/' . Auth::user()->profile->image) }}" alt="..."
+                        class="img-fluid rounded-circle">
+                 </div>
                 <div class="title">
-                    <h1 class="h5">{{ Auth::user()->name }}</h1>
+                    <h1 class="h5"><a href="{{ route('profile.edit') }}">{{ Auth::user()->name }}</a></h1>
                     <p>{{Auth::user()->email}}</p>
                 </div>
             </div>
@@ -166,6 +168,7 @@
         <!-- Sidebar Navigation end-->
         <div class="page-content">
             <div class="page-header">
+                
                 <div class="container-fluid">
                     <h2 class="h5 no-margin-bottom">Dashboard</h2>
                 </div>
@@ -190,6 +193,7 @@
                 @yield('view_orders')
                 @yield('order_details')
                 @yield('review')
+                @yield('content')
             </section>
 
             <section>

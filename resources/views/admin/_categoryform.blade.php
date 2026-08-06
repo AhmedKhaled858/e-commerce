@@ -1,15 +1,10 @@
-<input type="hidden" id="category_id" name="id">
+<x-form.input type="hidden" id="category_id" name="id" value="{{ $category->id ?? '' }}" />
 
 <x-form.label id="category_name">
     Category Name
 </x-form.label>
 
-<x-form.input
-    type="text"
-    id="category_name"
-    name="category_name"
-    placeholder="Enter category name"
-/>
+<x-form.input type="text" id="category_name" name="category_name" placeholder="Enter category name" />
 
 <br>
 
@@ -17,12 +12,7 @@
     Parent Category
 </x-form.label>
 
-<x-form.select
-    id="parent_id"
-    name="parent_id"
-    :options="$categories"
-    placeholder="Select Parent Category"
-/>
+<x-form.select id="parent_id" name="parent_id" :options="$categories" placeholder="Select Parent Category" />
 
 <br>
 
@@ -30,11 +20,7 @@
     Category Description
 </x-form.label>
 
-<x-form.textare
-    id="category_description"
-    name="category_description"
-    placeholder="Enter category description"
-/>
+<x-form.textare id="category_description" name="category_description" placeholder="Enter category description" />
 
 <br>
 
@@ -42,20 +28,10 @@
     Category Image
 </x-form.label>
 
-<x-form.input
-    type="file"
-    id="category_image"
-    name="category_image"
-    accept="image/*"
-    onchange="previewImage(this)"
-/>
+<x-form.input type="file" id="category_image" name="category_image" accept="image/*" onchange="previewImage(this)" />
 
-<img
-    id="image_preview"
-    class="img-thumbnail image-preview"
-    src=""
-    style="display:none;width:80px;height:80px;object-fit:cover;"
->
+<img id="image_preview" class="img-thumbnail image-preview" src=""
+    style="display:none;width:80px;height:80px;object-fit:cover;">
 
 <br>
 
@@ -63,72 +39,55 @@
     Status
 </x-form.label>
 
-<x-form.radio
-    id="status"
-    name="status"
-    :options="[
-        'active'=>'Active',
-        'archived'=>'Archived'
-    ]"
-/>
+<x-form.radio id="status" name="status" :options="[
+    'active' => 'Active',
+    'archived' => 'Archived',
+]" />
 
 <div class="modal-footer">
 
-    <button
-        type="submit"
-        class="btn btn-primary">
+    <button type="submit" class="btn btn-primary">
 
         {{ $button_label ?? 'Submit' }}
 
     </button>
 
-    @if($is_modal ?? true)
-
-        <button
-            type="button"
-            class="btn btn-secondary"
-            data-dismiss="modal">
+    @if ($is_modal ?? true)
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
 
             Close
 
         </button>
-
     @else
-
-        <a
-            href="{{ route('admin.listCategories') }}"
-            class="btn btn-secondary">
+        <a href="{{ route('admin.listCategories') }}" class="btn btn-secondary">
 
             Back
 
         </a>
-
     @endif
 
 </div>
 
 <script>
+    function previewImage(input) {
 
-function previewImage(input){
+        let preview = document.getElementById('image_preview');
 
-    let preview=document.getElementById('image_preview');
+        if (input.files && input.files[0]) {
 
-    if(input.files && input.files[0]){
+            let reader = new FileReader();
 
-        let reader=new FileReader();
+            reader.onload = function(e) {
 
-        reader.onload=function(e){
+                preview.src = e.target.result;
 
-            preview.src=e.target.result;
+                preview.style.display = 'block';
 
-            preview.style.display='block';
+            }
+
+            reader.readAsDataURL(input.files[0]);
 
         }
 
-        reader.readAsDataURL(input.files[0]);
-
     }
-
-}
-
 </script>

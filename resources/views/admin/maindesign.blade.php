@@ -22,8 +22,7 @@
     <link rel="stylesheet" href="{{ asset('admin/css/custom.css') }}">
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{ asset('admin/img/favicon.ico') }}">
-
-
+ @stack('styles')
 
 </head>
 
@@ -221,6 +220,8 @@
     <script src="{{ asset('admin/js/front.js') }}"></script>
     <script src="{{ asset('front_end/js/timeout.js') }}"></script>
     <script src="{{ asset('admin/js/custom.js') }}"> </script>
+       
+    @stack('scripts')
 </body>
 
 </html>

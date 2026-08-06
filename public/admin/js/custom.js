@@ -54,6 +54,9 @@ $(document).ready(function () {
                 $('#product_description').val(product.description);
                 $('#product_quantity').val(product.quantity);
                 $('#product_price').val(product.price);
+                // $('#tags').val(product.tags)
+               tagify.addTags(product.tags.map(tag => tag.name));
+            // console.log(product.tags);
 
                 // Select
                 $('#product_category').val(product.category_id);

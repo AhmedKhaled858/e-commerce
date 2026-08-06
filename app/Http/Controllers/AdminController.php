@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
-use  App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -16,20 +16,21 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Tag;
 
 class AdminController extends Controller
 {
     //
     //! start functions for category
     public function createCategory()
-        {
-            $categories = Category::all();
-            $category=new category();
-            return view('admin.createcategory', compact('categories', 'category'));
-        }
+    {
+        $categories = Category::all();
+        $category = new category();
+        return view('admin.createcategory', compact('categories', 'category'));
+    }
     public function storeCategory(StoreCategoryRequest $request)
-        { 
-            try{
+    {
+        try {
             $data = [
                 'name' => $request->category_name,
                 'parent_id' => $request->parent_id,
@@ -42,114 +43,121 @@ class AdminController extends Controller
             }
             Category::create($data);
             return redirect()->route('admin.createCategory')->with('success', 'Category created successfully');
-            } 
-            catch (\Exception $e) {
-                return redirect()->route('admin.createCategory')->with('error', 'An error occurred while creating the category: ' . $e->getMessage());
-            }
-        
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.createCategory')
+                ->with('error', 'An error occurred while creating the category: ' . $e->getMessage());
         }
+    }
     public function listCategories(Request $request)
-        {
-            $categories = Category::with('parent')
+    {
+        $categories = Category::with('parent')
             //here trying when use the withcount to return count use condition with it like status ='active'
             ->withCount([
-                'products'=>function($query){
-                    $query->where('status','active');
-                }
-                ])
-            ->filter($request->query())->paginate(5);
-            return view('admin.listcategories', compact('categories'));
-        }
-   
+                'products' => function ($query) {
+                    $query->where('status', 'active');
+                },
+            ])
+            ->filter($request->query())
+            ->paginate(5);
+        return view('admin.listcategories', compact('categories'));
+    }
+
     public function editCategory(StoreCategoryRequest $request, $id)
-        {
-            try {
-                $category = Category::findorFail($id);
-                $category->update([
-                    'name' => $request->input('category_name'),
-                    'parent_id' => $request->input('parent_id'),
-                    'slug' => Str::slug($request->input('category_name')),
-                    'description' => $request->input('category_description'),
-                    'status' => $request->input('status'),
-                ]);
-                if ($request->hasFile('category_image')) {
-                    // Delete the old image if it exists
-                    if (isset($category->image)) {
-                        Storage::disk('public')->delete($category->image);
-                    }
-                    // Store the new image
-                    $category->image = $request->file('category_image')->store('categories', 'public');
+    {
+        try {
+            $category = Category::findorFail($id);
+            $category->update([
+                'name' => $request->input('category_name'),
+                'parent_id' => $request->input('parent_id'),
+                'slug' => Str::slug($request->input('category_name')),
+                'description' => $request->input('category_description'),
+                'status' => $request->input('status'),
+            ]);
+            if ($request->hasFile('category_image')) {
+                // Delete the old image if it exists
+                if (isset($category->image)) {
+                    Storage::disk('public')->delete($category->image);
                 }
-                $category->save();
-                return redirect()->route('admin.listCategories')->with('success', 'Category updated successfully');
-            } catch (\Exception $e) {
-                return redirect()
-                    ->route('admin.listCategories')
-                    ->with('error', 'An error occurred while updating the category: ' . $e->getMessage());
+                // Store the new image
+                $category->image = $request->file('category_image')->store('categories', 'public');
             }
+            $category->save();
+            return redirect()->route('admin.listCategories')->with('success', 'Category updated successfully');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.listCategories')
+                ->with('error', 'An error occurred while updating the category: ' . $e->getMessage());
         }
-        public function getCategory(Category $category){
-         return response()->json([
-        'category' => $category,
-        'parents' => $category->availableParents(),
-    ]);
-        }
-    public function deleteCategory($id){
-            try{
-                $category = Category::find($id);
-           
-              $category->update([
-                'status'=>'archived'
+    }
+    public function getCategory(Category $category)
+    {
+        return response()->json([
+            'category' => $category,
+            'parents' => $category->availableParents(),
+        ]);
+    }
+    public function deleteCategory($id)
+    {
+        try {
+            $category = Category::find($id);
+
+            $category->update([
+                'status' => 'archived',
             ]);
             $category->delete();
-          
+
             return redirect()->route('admin.listCategories')->with('success', 'Category deleted successfully');
-            }
-            catch (\Exception $e) {
-                return redirect()->route('admin.listCategories')->with('error', 'An error occurred while deleting the category: ' . $e->getMessage());
-            }
-        
-     }
-    public function trashCategory(Request $request){
-        try{
-             $categories=Category::filter($request->query())->onlyTrashed()->paginate(5);
-            //  dd($categories);
-             return view('admin.trashedcategory',compact('categories'));
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.listCategories')
+                ->with('error', 'An error occurred while deleting the category: ' . $e->getMessage());
         }
-        catch (\Exception $e) {
-                return redirect()->route('admin.listCategories')->with('error',  $e->getMessage());
-            }
     }
-    public function restoreCategory(Request $request,$id){
-        try{
-             $category=Category::onlyTrashed()->findOrFail($id);
-             $category->restore();
-            return redirect()->route('admin.trashCategory')->with('success','Category Restore successfully');
+    public function trashCategory(Request $request)
+    {
+        try {
+            $categories = Category::filter($request->query())->onlyTrashed()->paginate(5);
+            //  dd($categories);
+            return view('admin.trashedcategory', compact('categories'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.listCategories')->with('error', $e->getMessage());
         }
-        catch(\Exception $e){
-             return redirect()->route('admin.trashCategory')->with('error','An error occurred while retoring the category: '.  $e->getMessage());
+    }
+    public function restoreCategory(Request $request, $id)
+    {
+        try {
+            $category = Category::onlyTrashed()->findOrFail($id);
+            $category->restore();
+            return redirect()->route('admin.trashCategory')->with('success', 'Category Restore successfully');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.trashCategory')
+                ->with('error', 'An error occurred while retoring the category: ' . $e->getMessage());
         }
-       
-     }
-     public function forceDeleteCategory(Request $request ,$id){
-        try{
-             $category=Category::onlyTrashed()->findOrFail($id);
-        $category->forceDelete();
-         if ($category->image) {
-               Storage::disk('public')->delete($category->image);
+    }
+    public function forceDeleteCategory(Request $request, $id)
+    {
+        try {
+            $category = Category::onlyTrashed()->findOrFail($id);
+            $category->forceDelete();
+            if ($category->image) {
+                Storage::disk('public')->delete($category->image);
             }
-        return redirect()->route('admin.listCategories')->with('success',"The category has been permanently deleted");
+            return redirect()->route('admin.listCategories')->with('success', 'The category has been permanently deleted');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.trashCategory')
+                ->with('error', 'An error occurred while deleting the category: ' . $e->getMessage());
         }
-        catch(\Exception $e){
-             return redirect()->route('admin.trashCategory')->with('error','An error occurred while deleting the category: '.  $e->getMessage());
-        }
-     }
-     //to display products inside category
-     public function showCategory(Category $category){
-        return view('admin.showcategory',[
-            'category'=>$category
+    }
+    //to display products inside category
+    public function showCategory(Category $category)
+    {
+        return view('admin.showcategory', [
+            'category' => $category,
         ]);
-     }
+    }
     //?end functions for category
 
     //! start functions for product
@@ -162,34 +170,58 @@ class AdminController extends Controller
 
     public function storeProduct(StoreProductRequest $request)
     {
-        $data = [
+        try{
+            DB::beginTransaction();
+             $data = [
             'title' => $request->product_title,
-            'slug'=>Str::slug($request->product_title),
+            'slug' => Str::slug($request->product_title),
             'description' => $request->product_description,
             'quantity' => $request->product_quantity,
             'price' => $request->product_price,
             'category_id' => $request->product_category,
-            'store_id'=>Auth::user()->store_id,
+            'store_id' => Auth::user()->store_id,
         ];
 
         if ($request->hasFile('product_image')) {
             $data['product_image'] = $request->file('product_image')->store('products', 'public');
         }
 
-        Product::create($data);
+        $product = Product::create($data);
+         if ($request->filled('tags')) {
+                $tags = json_decode($request->tags);
+
+                $tagIds = [];
+
+                foreach ($tags as $item) {
+                    $tag = Tag::firstOrCreate(['slug' => Str::slug($item->value)], ['name' => $item->value]);
+
+                    $tagIds[] = $tag->id;
+                }
+
+                $product->tags()->sync($tagIds);
+            } else {
+                $product->tags()->detach();
+            }
+
+            DB::commit();
 
         return redirect()->route('admin.addProduct')->with('success', 'Product created successfully');
+        }
+        catch(\Exception $e){
+            return redirect()->route('admin.addProduct')->with('error', 'An error occurred while creating the product: ' . $e->getMessage());
+        }
+       
     }
     // view products function with pagination
     public function ViewProducts(Request $request)
     {
-        $products = Product::with(['category:id,name','store:id,name'])
-        ->filter($request->query())
-        ->paginate(10);
+        $products = Product::with(['category:id,name', 'store:id,name', 'tags:id,name'])
+            ->filter($request->query())
+            ->paginate(10);
         $categories = Category::all();
         // $stores=Store::all();
 
-        return view('admin.viewproducts', compact('products', 'categories',));
+        return view('admin.viewproducts', compact('products', 'categories'));
     }
     // delete product function
     public function deleteProduct($id)
@@ -205,73 +237,101 @@ class AdminController extends Controller
         }
         return redirect()->route('admin.ViewProducts')->with('error', 'Product not found');
     }
-     public function trashproduct(Request $request){
-        try{
-             $products=Product::filter($request->query())->onlyTrashed()->paginate(5);
+    public function trashproduct(Request $request)
+    {
+        try {
+            $products = Product::filter($request->query())->onlyTrashed()->paginate(5);
             //  dd($products);
-             return view('admin.trashedproduct',compact('products'));
+            return view('admin.trashedproduct', compact('products'));
+        } catch (\Exception $e) {
+            return redirect()->route('admin.ViewProducts')->with('error', $e->getMessage());
         }
-        catch (\Exception $e) {
-                return redirect()->route('admin.ViewProducts')->with('error',  $e->getMessage());
-            }
     }
-    public function restoreProduct(Request $request,$id){
-        try{
-             $product=Product::onlyTrashed()->findOrFail($id);
-             $product->restore();
-            return redirect()->route('admin.trashProduct')->with('success','Product Restore successfully');
+    public function restoreProduct(Request $request, $id)
+    {
+        try {
+            $product = Product::onlyTrashed()->findOrFail($id);
+            $product->restore();
+            return redirect()->route('admin.trashProduct')->with('success', 'Product Restore successfully');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.trashCategory')
+                ->with('error', 'An error occurred while retoring the Product: ' . $e->getMessage());
         }
-        catch(\Exception $e){
-             return redirect()->route('admin.trashCategory')->with('error','An error occurred while retoring the Product: '.  $e->getMessage());
-        }
-       
-     }
-     public function forceDeleteProduct(Request $request ,$id){
-        try{
-             $product=Product::onlyTrashed()->findOrFail($id);
-        $product->forceDelete();
-         if ($product->image) {
-               Storage::disk('public')->delete($product->image);
+    }
+    public function forceDeleteProduct(Request $request, $id)
+    {
+        try {
+            $product = Product::onlyTrashed()->findOrFail($id);
+            $product->forceDelete();
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
             }
-        return redirect()->route('admin.ViewProducts')->with('success',"The Product has been permanently deleted");
+            return redirect()->route('admin.ViewProducts')->with('success', 'The Product has been permanently deleted');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.trashProduct')
+                ->with('error', 'An error occurred while deleting the Product: ' . $e->getMessage());
         }
-        catch(\Exception $e){
-             return redirect()->route('admin.trashProduct')->with('error','An error occurred while deleting the Product: '.  $e->getMessage());
-        }
-     }
+    }
     // edit product function
     public function editProduct(UpdateProductRequest $request, $id)
     {
         try {
+            DB::beginTransaction();
+
             $product = Product::findOrFail($id);
 
             $data = [
                 'title' => $request->product_title,
-                'slug'=>Str::slug($request->product_title),
+                'slug' => Str::slug($request->product_title),
                 'description' => $request->product_description,
                 'quantity' => $request->product_quantity,
                 'price' => $request->product_price,
                 'category_id' => $request->product_category,
             ];
 
+            // Update Image
             if ($request->hasFile('product_image')) {
-                $imagePath = public_path($product->product_image);
-                if (file_exists($imagePath)) {
-                    unlink($imagePath);
+                if ($product->product_image) {
+                    Storage::disk('public')->delete($product->product_image);
                 }
+
                 $data['product_image'] = $request->file('product_image')->store('products', 'public');
             }
+
             $product->update($data);
 
-            return redirect()->route('admin.ViewProducts')->with('success', 'Product updated successfully');
+            // Update Tags
+            if ($request->filled('tags')) {
+                $tags = json_decode($request->tags);
+
+                $tagIds = [];
+
+                foreach ($tags as $item) {
+                    $tag = Tag::firstOrCreate(['slug' => Str::slug($item->value)], ['name' => $item->value]);
+
+                    $tagIds[] = $tag->id;
+                }
+
+                $product->tags()->sync($tagIds);
+            } else {
+                $product->tags()->detach();
+            }
+
+            DB::commit();
+
+            return redirect()->route('admin.ViewProducts')->with('success', 'Product updated successfully.');
         } catch (\Exception $e) {
-            return redirect()
-                ->route('admin.ViewProducts')
-                ->with('error', 'An error occurred while updating the product: ' . $e->getMessage());
+            DB::rollBack();
+
+            return redirect()->route('admin.ViewProducts')->with('error', $e->getMessage());
         }
     }
-    public function updateproduct(Product $product){
-    return response()->json($product);
+    public function updateproduct(Product $product)
+    {
+        $product->load('tags');
+        return response()->json($product);
     }
     //? end functions for product
     // view orders function

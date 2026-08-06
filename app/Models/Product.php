@@ -28,6 +28,9 @@ class Product extends Model
     {
         static::addGlobalScope(new StoreSCope);
     }
+    public function tags(){
+        return $this->belongsToMany(Tag::class,'product_tag');
+    }
     //relation with category 1 t 1 
     public function category(){
         return $this->belongsTo(Category::class);
